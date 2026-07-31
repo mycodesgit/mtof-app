@@ -49,7 +49,7 @@
         .sidebar.collapsed .nav-link.active,
         .sidebar.collapsed .nav-link:hover {
             background-color: transparent !important;
-            color: #ffffff !important;
+            color: #000000 !important;
         }
         /* main {
             background-color: #f4f6f9;
@@ -102,6 +102,11 @@
         <div>
             <!-- Navbar nav -->
             <ul class="list-unstyled d-flex align-items-center mb-0 gap-1">
+                <li>
+                    <button id="themeToggleBtn" class="btn btn-light btn-icon rounded-circle me-2" title="Toggle theme">
+                        <i id="themeIcon" class="ti ti-sun"></i>
+                    </button>
+                </li>
                 <!-- Dropdown -->
                 <li class="ms-3 dropdown">
                     <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -146,11 +151,11 @@
     </nav>
 
     <!-- SIDEBAR -->
-    <aside id="sidebar" class="sidebar" style="background-color: #29383f !important;">
-        <div class="logo-area border-bottom-0" style="background-color: #38464d">
+    <aside id="sidebar" class="sidebar">
+        <div class="logo-area">
             <div class="d-inline-flex">
                 <img src="{{ asset('uilibs/images/candoni-logo.png') }}" alt="logo" width="24">
-                <span class="logo-text ms-2 text-light" style="font-weight: bold">MTOF</span>
+                <span class="logo-text ms-2" style="font-weight: bold">MTOF</span>
             </div>
         </div>
         @include('includes.sidebar')
@@ -237,7 +242,41 @@
         });
     </script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const themeBtn = document.getElementById('themeToggleBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const htmlElement = document.documentElement;
 
+            function updateIcon(theme) {
+                if (themeIcon) {
+                    themeIcon.className = theme === 'dark' ? 'ti ti-moon' : 'ti ti-sun';
+                }
+            }
+
+            // 1. Read saved theme from localStorage, or default to system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+
+            // 2. Apply saved theme to html attribute on load
+            htmlElement.setAttribute('data-bs-theme', currentTheme);
+            updateIcon(currentTheme);
+
+            // 3. Toggle logic
+            if (themeBtn) {
+                themeBtn.addEventListener('click', function () {
+                    const activeTheme = htmlElement.getAttribute('data-bs-theme');
+                    const newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+
+                    htmlElement.setAttribute('data-bs-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    updateIcon(newTheme);
+                });
+            }
+        });
+    </script>
+    
     @if (request()->routeIs('applicant.index'))
         @include('scripts.applicantjs')
     @endif

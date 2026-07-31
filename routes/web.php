@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,5 +35,9 @@ Route::group(['middleware'=>['login_empauth']],function(){
     Route::prefix('/applicants')->group(function () {
         Route::get('/list/view', [ApplicantController::class,'index'])->name('applicant.index');
         Route::get('/list/view/fetch', [ApplicantController::class,'show'])->name('applicant.show');
+    });
+    
+    Route::prefix('/system')->group(function () {
+        Route::get('/setting/view', [SettingsController::class,'index'])->name('settings.index');
     });
 });

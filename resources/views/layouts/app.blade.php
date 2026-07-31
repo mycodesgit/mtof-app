@@ -170,7 +170,7 @@
             <div class="row">
                 <div class="col-12">
                     <footer class="text-center py-2 mt-6 text-secondary fixed-bottom bg-white" style="z-index: 99">
-                        <p class="mb-0">MTOF V.2.0</p>
+                        <p class="mb-0">&copy; MTOF System V2. All rights reserved.</p>
                     </footer>
                 </div>
             </div>
@@ -216,14 +216,16 @@
         $(function () {
             $('.select2').each(function () {
                 $(this).select2({
-                    dropdownParent: $(this).closest('.modal'),
+                    dropdownParent: $(this).closest('.modal')
                 });
             });
 
-            $('.select2bs4').select2({
-                theme: 'bootstrap4',
-                height: '100',
-            })
+            $('.select2bs4').each(function () {
+                $(this).select2({
+                    theme: 'bootstrap4',
+                    dropdownParent: $(this).closest('.modal')
+                });
+            });
         });
         document.addEventListener("DOMContentLoaded", function () {
             const cards = document.querySelectorAll('.card-animate');

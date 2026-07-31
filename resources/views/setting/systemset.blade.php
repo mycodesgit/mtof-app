@@ -91,36 +91,42 @@
                             <div class="tab-pane fade" id="general" role="tabpanel">
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <label class="form-label fw-bold">Application Name</label>
-                                        <input type="text" class="form-control" placeholder="Enter app name">
+                                        <label class="form-label fw-bold">System Header Name: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Enter System Header name">
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="form-label fw-bold">System Email Contact</label>
-                                        <input type="email" class="form-control" placeholder="admin@example.com">
+                                        <label class="form-label fw-bold">System Full Name: <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control form-control-sm" placeholder="Enter System full name">
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Timezone</label>
-                                        <select class="form-select">
-                                            <option>Select Timezone</option>
-                                            <option>Asia/Manila (GMT+8)</option>
-                                            <option>UTC</option>
+                                    <div class="col-md-12">
+                                        <label class="form-label fw-bold">System Description: <span class="text-danger">*</span></label>
+                                        <textarea name="" id="" class="form-control form-control-sm" cols="30" rows="5"></textarea>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">System About us:</label>
+                                        <input type="email" class="form-control form-control-sm" placeholder="About">
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">System Category:</label>
+                                        <select name="" id="" class="form-control form-control-sm">
+                                            <option value=""> ---Select--- </option>
+                                            <option value="LOCAL GOVERNMENT UNIT">LOCAL GOVERNMENT UNIT</option>
+                                            <option value="PRIVATE UNIT">PRIVATE UNIT</option>
                                         </select>
                                     </div>
-
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Currency</label>
-                                        <input type="text" class="form-control" placeholder="₱ or $">
+                                    
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">System Email:</label>
+                                        <input type="email" class="form-control form-control-sm" placeholder="admin@example.com">
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-bold">Pagination Limit</label>
-                                        <select class="form-select">
-                                            <option>10 rows per page</option>
-                                            <option>25 rows per page</option>
-                                            <option>50 rows per page</option>
-                                        </select>
+                                    <div class="col-md-3">
+                                        <label class="form-label fw-bold">System Contact No.:</label>
+                                        <input type="text" class="form-control form-control-sm" placeholder="09xxxxxxxxx">
                                     </div>
                                 </div>
 

@@ -13,6 +13,7 @@ class Signatories extends Model
         'sigfname',
         'sigmname',
         'siglname',
+        'sigext',
         'sigposition',
         'postedBy',
         'status'

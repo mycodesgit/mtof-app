@@ -21,4 +21,11 @@ class SignatoryController extends Controller
     {
         return view('signatory.viewlist');
     }
+
+    public function show(Request $request)
+    {  
+        $data = Signatories::all();
+        
+        return response()->json(['data' => $data]);
+    }
 }

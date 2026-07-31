@@ -40,6 +40,7 @@ Route::group(['middleware'=>['login_empauth']],function(){
 
     Route::prefix('/signatories')->group(function () {
         Route::get('/list/view', [SignatoryController::class,'index'])->name('signatory.index');
+        Route::get('/list/view/fetch', [SignatoryController::class,'show'])->name('signatory.show');
     });
     
     Route::prefix('/system')->group(function () {

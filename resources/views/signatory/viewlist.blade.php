@@ -21,11 +21,12 @@
                                 <button type="button" class="btn btn-outline-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#addsignatoryModal">
                                     <i class="ti ti-user-plus"></i> Add New
                                 </button>
-                                <table id="applicantlistTable" class="table table-hover">
+                                <table id="signatorylistTable" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
                                             <th>Position</th>
+                                            <th>Posted by</th>
                                             <th>Status</th>
                                             <th width="10%">Actions</th>
                                         </tr>
@@ -82,7 +83,7 @@
     </div>
 
     <script>
-        var applicantReadRoute = "{{ route('applicant.show') }}";
+        var signatoryReadRoute = "{{ route('signatory.show') }}";
     </script>
 @endsection
  

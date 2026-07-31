@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('sigfname');
             $table->string('sigmname')->nullable();
             $table->string('siglname');
+            $table->string('sigext')->nullable();
             $table->string('sigposition');
             $table->string('postedBy');
             $table->enum('status', ['1', '2'])->default('1');

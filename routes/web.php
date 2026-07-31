@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\SignatoryController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\AccountSettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,5 +46,9 @@ Route::group(['middleware'=>['login_empauth']],function(){
     
     Route::prefix('/system')->group(function () {
         Route::get('/setting/view', [SettingsController::class,'index'])->name('settings.index');
+    });
+    
+    Route::prefix('/account')->group(function () {
+        Route::get('/setting/preview', [AccountSettingController::class,'index'])->name('accountseting.index');
     });
 });

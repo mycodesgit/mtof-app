@@ -131,7 +131,7 @@
                                 </div>
                             </div>
                             <div class="p-3 d-flex flex-column gap-1 medium lh-lg">
-                                <a href="#!" class="text-secondary">
+                                <a href="{{ route('accountseting.index') }}" class="text-secondary">
                                     <i class="ti ti-settings"></i> <span>Account Settings</span>
                                 </a>
                                 <a href="#!" class="text-success">

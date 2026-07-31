@@ -55,19 +55,19 @@
                         <input type="hidden" name="id" id="editStudFeeId">
                         <div class="form-group">
                             <label for="addFname">First Name: <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Enter First name" id="addFname" name="sigfname">
+                            <input type="text" class="form-control" placeholder="Enter First name" id="addFname" name="sigfname">
                         </div>
                         <div class="form-group mt-3">
                             <label for="addMname">Middle Name:</label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Enter middle name" id="addMname" name="sigfname">
+                            <input type="text" class="form-control" placeholder="Enter middle name" id="addMname" name="sigfname">
                         </div>
                         <div class="form-group mt-3">
                             <label for="addLname">Last Name: <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-sm" placeholder="Enter Last name" id="addLname" name="sigfname">
+                            <input type="text" class="form-control" placeholder="Enter Last name" id="addLname" name="sigfname">
                         </div>
                         <div class="form-group mt-3">
                             <label for="addext">Last Name: <span class="text-danger">*</span></label>
-                            <select name="sigext" id="addext" class="form-control form-control-sm">
+                            <select name="sigext" id="addext" class="form-control">
                                 <option value=""> ---Select--- </option>
                                 <option value="Jr.">Jr.</option>
                                 <option value="Sr.">Sr.</option>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="form-group mt-3">
                             <label for="addPosition">Position: <span class="text-danger">*</span></label>
-                            <select class="form-control form-control-sm select2bs4" id="addPosition" name="sigposition">
+                            <select class="form-control select2bs4" id="addPosition" name="sigposition">
                                 <option disabled selected> ---Select---</option>
                                 <option value="Secretary to Sanguniang Bayan">Secretary to Sanguniang Bayan</option>
                             </select>

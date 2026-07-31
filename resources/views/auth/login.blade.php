@@ -129,7 +129,7 @@
                     
                     {{-- System Logo --}}
                     <div class="text-center mb-4">
-                        <div class="mb-3 d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle" style="width: 64px; height: 64px;">
+                        <div class="mb-3 d-inline-flex align-items-center justify-content-center bg-success-subtle text-success rounded-circle" style="width: 64px; height: 64px;">
                             <i class="ti ti-lock fs-2"></i>
                         </div>
                         <h4 class="fw-bold mb-1">Welcome Back</h4>
@@ -175,7 +175,7 @@
                         </div>
 
                         {{-- Submit Button --}}
-                        <button type="submit" class="btn btn-primary w-100 py-2.5 fw-semibold rounded-3 mb-3 shadow-sm">
+                        <button type="submit" class="btn btn-success w-100 py-2.5 fw-semibold rounded-3 mb-3 shadow-sm">
                             <i class="ti ti-login me-1"></i> Sign In
                         </button>
                     </form>

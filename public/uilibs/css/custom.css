@@ -253,7 +253,11 @@
 .card-animate {
     opacity: 0;
     transform: translateY(20px) scale(0.98);
-    transition: all 0.3s ease;
+    /* Specify precise properties instead of 'all' */
+    transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Promotes the layer to GPU for 60fps rendering */
+    will-change: opacity, transform;
 }
 
 .card-animate.show {

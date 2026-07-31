@@ -16,7 +16,7 @@
                                 <div class="d-flex justify-content-between pb-2">
                                     <div>
                                         <h3 id="facultyCount" class="fw-bold h1">{{ $appcount }}</h3>
-                                        <span>MTOF Applicant's Registered</span>
+                                        <span>Registered</span>
                                     </div>
                                     <div>
                                         <i class="ti ti-users fs-1 text-success"></i>
@@ -31,7 +31,7 @@
                                 <div class="d-flex justify-content-between pb-2">
                                     <div>
                                         <h3 id="facultyCount" class="fw-bold h1">0</h3>
-                                        <span>Personnel Signatories</span>
+                                        <span>Signatories</span>
                                     </div>
                                     <div>
                                         <i class="ti ti-signature fs-1 text-success"></i>
@@ -46,7 +46,7 @@
                                 <div class="d-flex justify-content-between pb-2">
                                     <div>
                                         <h3 id="facultyCount" class="fw-bold h1">0</h3>
-                                        <span>Clearance & Documents</span>
+                                        <span>Documents</span>
                                     </div>
                                     <div>
                                         <i class="ti ti-file fs-1 text-success"></i>

@@ -231,9 +231,13 @@
             const cards = document.querySelectorAll('.card-animate');
 
             cards.forEach((card, index) => {
-                setTimeout(() => {
+                // Pass index to CSS delay dynamically
+                card.style.transitionDelay = `${index * 80}ms`;
+                
+                // Use requestAnimationFrame for smooth execution
+                requestAnimationFrame(() => {
                     card.classList.add('show');
-                }, index * 90); // stagger effect
+                });
             });
         });
         $('#collegeID').on('change', function () {

@@ -17,7 +17,7 @@
             <div class="row g-4">
                 {{-- Left Sidebar Profile Card --}}
                 <div class="col-lg-4 col-xl-3">
-                    <div class="card shadow-sm rounded-3">
+                    <div class="card card-animate shadow-sm rounded-3">
                         <div class="card-body text-center p-4">
                             <div class="position-relative d-inline-block mb-3">
                                 <div class="avatar-lg bg-success-subtle text-success rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 80px; height: 80px;">
@@ -57,7 +57,7 @@
 
                 {{-- Right Main Form Area --}}
                 <div class="col-lg-8 col-xl-9">
-                    <div class="card shadow-sm rounded-3">
+                    <div class="card card-animate shadow-sm rounded-3">
                         <div class="card-header bg-transparent border-bottom pt-3 pb-2">
                             <ul class="nav nav-tabs card-header-tabs border-bottom-0" id="settingsTabs" role="tablist">
                                 <li class="nav-item" role="presentation">

@@ -27,7 +27,14 @@
     <link rel="stylesheet" href="{{ asset('uilibs/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <!-- fullCalendar -->
     <link rel="stylesheet" href="{{ asset('uilibs/plugins/fullcalendar/fullcalendar.css') }}">
-
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        })();
+    </script>
     <style>
         .nav-link {
             font-size: 14px;
@@ -256,20 +263,16 @@
 
             function updateIcon(theme) {
                 if (themeIcon) {
-                    themeIcon.className = theme === 'dark' ? 'ti ti-moon' : 'ti ti-sun';
+                    // Updated so Sun shows when Dark mode is active (click to switch to light)
+                    themeIcon.className = theme === 'dark' ? 'ti ti-sun text-warning' : 'ti ti-moon';
                 }
             }
 
-            // 1. Read saved theme from localStorage, or default to system preference
-            const savedTheme = localStorage.getItem('theme');
-            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-
-            // 2. Apply saved theme to html attribute on load
-            htmlElement.setAttribute('data-bs-theme', currentTheme);
+            // Sync icon with current attribute on load
+            const currentTheme = htmlElement.getAttribute('data-bs-theme') || 'light';
             updateIcon(currentTheme);
 
-            // 3. Toggle logic
+            // Toggle logic on click
             if (themeBtn) {
                 themeBtn.addEventListener('click', function () {
                     const activeTheme = htmlElement.getAttribute('data-bs-theme');

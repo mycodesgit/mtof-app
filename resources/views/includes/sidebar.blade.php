@@ -2,7 +2,7 @@
     $current_route=request()->route()->getName();
 
     $applicantActive = in_array($current_route, ['applicant.index']) ? 'active' : '';
-
+    $signatoryActive = in_array($current_route, ['signatory.index']) ? 'active' : '';
     $settingsActive = in_array($current_route, ['settings.index']) ? 'active' : '';
 @endphp
 
@@ -23,7 +23,7 @@
     </li>
     
     <li>
-        <a class="nav-link" href="#">
+        <a class="nav-link {{ $signatoryActive }}" href="{{ route('signatory.index') }}">
             <i class="ti ti-signature"></i><span class="nav-text">Signatories</span>
         </a>
     </li>

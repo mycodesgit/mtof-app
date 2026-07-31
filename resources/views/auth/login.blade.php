@@ -20,6 +20,34 @@
     <link rel="stylesheet" href="{{ asset('uilibs/plugins/toastr/toastr.min.css') }}">
 
     <style>
+        /* Base Container & Background Settings */
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background-color: #f8fafc;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- Dark Mode Radial Green Background --- */
+        [data-bs-theme="dark"] .login-wrapper {
+            background: radial-gradient(circle at 20% 30%, #0d3822 0%, #051a10 60%, #020d08 100%) !important;
+        }
+
+        /* Subtle Background Grid overlay in Dark Mode */
+        [data-bs-theme="dark"] .login-wrapper::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+        }
+
         /* Base Canvas Container for Background Particles */
         .bg-particles-container {
             position: absolute;
@@ -36,13 +64,12 @@
         .bg-particle {
             position: absolute;
             bottom: -50px;
-            color: rgba(165, 57, 68, 0.11); /* Light red tint matching button */
+            color: rgba(25, 135, 84, 0.15); /* Light green tint in Light mode */
             font-size: 1.8rem;
             animation: floatUp 15s infinite linear;
             pointer-events: none;
         }
 
-        /* Varying positions, sizes, and delays for natural effect */
         .bg-particle:nth-child(1) { left: 10%; font-size: 2.2rem; animation-duration: 18s; animation-delay: 0s; }
         .bg-particle:nth-child(2) { left: 25%; font-size: 1.4rem; animation-duration: 12s; animation-delay: 2s; }
         .bg-particle:nth-child(3) { left: 45%; font-size: 2.5rem; animation-duration: 22s; animation-delay: 4s; }
@@ -67,16 +94,68 @@
             }
         }
 
-        /* Elevate Login Card over background particles */
+        /* Hero Text Styling */
+        .hero-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            line-height: 1.15;
+            color: #0f172a;
+        }
+
+        .hero-title .highlight {
+            color: #198754;
+        }
+
+        [data-bs-theme="dark"] .hero-title {
+            color: #ffffff;
+        }
+
+        [data-bs-theme="dark"] .hero-title .highlight {
+            color: #f59e0b; /* Golden contrast accent for dark green background */
+        }
+
+        .hero-badge {
+            background-color: rgba(25, 135, 84, 0.1);
+            color: #198754;
+            border: 1px solid rgba(25, 135, 84, 0.2);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 0.35rem 0.85rem;
+            border-radius: 50rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        [data-bs-theme="dark"] .hero-badge {
+            background-color: rgba(245, 158, 11, 0.12);
+            color: #f59e0b;
+            border-color: rgba(245, 158, 11, 0.25);
+        }
+
+        .feature-pill {
+            background-color: rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            color: #475569;
+            font-size: 0.825rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 50rem;
+        }
+
+        [data-bs-theme="dark"] .feature-pill {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+        }
+
+        /* Elevate Content over background particles */
         .login-card-wrapper {
             position: relative;
             z-index: 1;
         }
 
-        /* Dark Mode Custom Overrides */
-        [data-bs-theme="dark"] .bg-body-tertiary {
-            background-color: #0f172a !important;
-        }
+        /* Dark Mode Card Custom Overrides */
         [data-bs-theme="dark"] .card {
             background-color: #1e293b !important;
             border-color: #334155 !important;
@@ -94,25 +173,22 @@
         [data-bs-theme="dark"] .text-secondary {
             color: #94a3b8 !important;
         }
-        [data-bs-theme="dark"] .bg-primary-subtle {
-            background-color: rgba(224, 82, 54, 0.15) !important;
-        }
         [data-bs-theme="dark"] .bg-particle {
-            color: rgba(248, 250, 252, 0.07); /* Subtle white glow in dark mode */
+            color: rgba(255, 255, 255, 0.07);
         }
     </style>
 </head>
 
 <body>
-    <div class="min-vh-100 d-flex align-items-center justify-content-center bg-body-tertiary p-3 position-relative overflow-hidden">
+    <div class="login-wrapper p-3 p-md-4">
         
         {{-- Floating Background Icons / Particles --}}
         <div class="bg-particles-container">
             <i class="ti ti-shield bg-particle"></i>
             <i class="ti ti-lock bg-particle"></i>
             <i class="ti ti-key bg-particle"></i>
-            <i class="ti ti-user-check bg-particle"></i>
-            <i class="ti ti-settings bg-particle"></i>
+            <i class="ti ti-motorbike bg-particle"></i>
+            <i class="ti ti-file-text bg-particle"></i>
             <i class="ti ti-checkup-list bg-particle"></i>
         </div>
 
@@ -123,74 +199,108 @@
             </button>
         </div>
 
-        <div class="container login-card-wrapper" style="max-width: 420px;">
-            <div class="card border-1 shadow-lg rounded-4">
-                <div class="card-body p-4 p-sm-5">
-                    
-                    {{-- System Logo --}}
-                    <div class="text-center mb-4">
-                        <div class="mb-3 d-inline-flex align-items-center justify-content-center bg-success-subtle text-success rounded-circle" style="width: 64px; height: 64px;">
-                            <i class="ti ti-lock fs-2"></i>
+        <div class="container login-card-wrapper">
+            <div class="row align-items-center justify-content-center g-4 g-lg-5">
+                
+                {{-- Left Column: Hero Branding Section --}}
+                <div class="col-lg-6 col-xl-6 text-center text-lg-start pe-lg-4 d-none d-lg-block">
+                    <div class="mb-3">
+                        <img src="{{ asset('uilibs/images/candoni-logo.png') }}" alt="Seal Logo" style="width: 80px; height: 80px;" class="img-fluid mb-3">
+                        <div>
+                            <span class="hero-badge">
+                                <i class="ti ti-building-landmark"></i> LOCAL GOVERNMENT UNIT
+                            </span>
                         </div>
-                        <h4 class="fw-bold mb-1">Welcome Back</h4>
-                        <p class="text-muted small">Sign in to your MTOF account</p>
                     </div>
 
-                    <form action="{{ route('login.store') }}" method="post">
-                        @csrf
-                        {{-- Email Field --}}
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold small text-secondary">Email Address</label>
-                            <div class="position-relative">
-                                <span class="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted">
-                                    <i class="ti ti-user fs-5"></i>
-                                </span>
-                                <input type="text" name="username" class="form-control ps-5 py-2-5" placeholder="username" style="padding-left: 2.75rem !important;">
-                            </div>
-                        </div>
+                    <h1 class="hero-title mb-3">
+                        Municipal Tricycle Operators <br>
+                        <span class="highlight">Franchising System</span>
+                    </h1>
 
-                        {{-- Password Field --}}
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <label class="form-label fw-semibold small text-secondary mb-0">Password</label>
-                                <a href="#" class="text-decoration-none small text-muted">Forgot password?</a>
-                            </div>
-                            <div class="position-relative">
-                                <span class="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted">
-                                    <i class="ti ti-key fs-5"></i>
-                                </span>
-                                <input type="password" name="password" class="form-control ps-5 pe-5 py-2-5" id="passwordInput" placeholder="••••••••" style="padding-left: 2.75rem !important;">
-                                <button type="button" class="btn border-0 position-absolute top-50 end-0 translate-middle-y me-2 text-muted p-1" id="togglePassword">
-                                    <i class="ti ti-eye fs-5" id="passwordIcon"></i>
-                                </button>
-                            </div>
-                        </div>
+                    <p class="text-secondary fs-6 mb-4 me-lg-4" style="max-width: 520px;">
+                        The official management platform for municipal tricycle franchise operations — records, permits, fees, and compliance tracking in one secure workspace.
+                    </p>
 
-                        {{-- Remember Me Checkbox --}}
-                        <div class="form-check mb-4">
-                            <input class="form-check-input" type="checkbox" id="rememberMe">
-                            <label class="form-check-label small text-secondary" for="rememberMe">
-                                Remember me on this device
-                            </label>
-                        </div>
-
-                        {{-- Submit Button --}}
-                        <button type="submit" class="btn btn-success w-100 py-2.5 fw-semibold rounded-3 mb-3 shadow-sm">
-                            <i class="ti ti-login me-1"></i> Sign In
-                        </button>
-                    </form>
-
-                    <div class="text-center">
-                        <span class="text-muted small">Don't have an account?</span>
-                        <a href="#" class="text-decoration-none small fw-semibold">Contact Administrator</a>
+                    <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-lg-start">
+                        <span class="feature-pill"><i class="ti ti-check text-success me-1"></i> Franchise Records</span>
+                        <span class="feature-pill"><i class="ti ti-check text-success me-1"></i> Permit Application</span>
+                        <span class="feature-pill"><i class="ti ti-check text-success me-1"></i> Violation Management</span>
                     </div>
-
                 </div>
-            </div>
 
-            {{-- Footer Note --}}
-            <div class="text-center mt-4">
-                <small class="text-muted">&copy; MTOF System. All rights reserved.</small>
+                {{-- Right Column: Sign In Card --}}
+                <div class="col-12 col-sm-9 col-md-7 col-lg-5 col-xl-4">
+                    <div class="card border-1 shadow-lg rounded-4">
+                        <div class="card-body p-4 p-sm-5">
+                            
+                            {{-- System Logo --}}
+                            <div class="text-center mb-4">
+                                <div class="mb-3 d-inline-flex align-items-center justify-content-center bg-success-subtle text-success rounded-circle" style="width: 64px; height: 64px;">
+                                    <i class="ti ti-lock fs-2"></i>
+                                </div>
+                                <h4 class="fw-bold mb-1">Welcome Back</h4>
+                                <p class="text-muted small">Sign in to your MTOF account</p>
+                            </div>
+
+                            <form action="{{ route('login.store') }}" method="post">
+                                @csrf
+                                {{-- Username Field --}}
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold small text-secondary">Username or Email</label>
+                                    <div class="position-relative">
+                                        <span class="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted">
+                                            <i class="ti ti-user fs-5"></i>
+                                        </span>
+                                        <input type="text" name="username" class="form-control ps-5 py-2-5" placeholder="username" style="padding-left: 2.75rem !important;">
+                                    </div>
+                                </div>
+
+                                {{-- Password Field --}}
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <label class="form-label fw-semibold small text-secondary mb-0">Password</label>
+                                        <a href="#" class="text-decoration-none small text-muted">Forgot password?</a>
+                                    </div>
+                                    <div class="position-relative">
+                                        <span class="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted">
+                                            <i class="ti ti-key fs-5"></i>
+                                        </span>
+                                        <input type="password" name="password" class="form-control ps-5 pe-5 py-2-5" id="passwordInput" placeholder="••••••••" style="padding-left: 2.75rem !important;">
+                                        <button type="button" class="btn border-0 position-absolute top-50 end-0 translate-middle-y me-2 text-muted p-1" id="togglePassword">
+                                            <i class="ti ti-eye fs-5" id="passwordIcon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {{-- Remember Me Checkbox --}}
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                                    <label class="form-check-label small text-secondary" for="rememberMe">
+                                        Remember me on this device
+                                    </label>
+                                </div>
+
+                                {{-- Submit Button --}}
+                                <button type="submit" class="btn btn-success w-100 py-2.5 fw-semibold rounded-3 mb-3 shadow-sm">
+                                    <i class="ti ti-login me-1"></i> Sign In
+                                </button>
+                            </form>
+
+                            <div class="text-center">
+                                <span class="text-muted small">Don't have an account?</span>
+                                <a href="#" class="text-decoration-none small fw-semibold">Contact Administrator</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {{-- Footer Note --}}
+                    <div class="text-center mt-4">
+                        <small class="text-muted">&copy; MTOF System. All rights reserved.</small>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

@@ -65,14 +65,13 @@
                     data: 'id',
                     render: function(data, type, row) {
                         if (type === 'display') {
+                            var buttons = '<button type="button" class="btn btn-sm btn-warning btn-formsview mr-1 text-light" data-id="' + row.id + '"  data-toggle="tooltip" data-placement="top" title="View Forms"><i class="fas fa-file-pdf"></i></button>'+'&nbsp;';
+                                buttons += '<button type="button" class="btn btn-sm btn-light btn-docsview mr-1" data-id="' + row.id + '"  data-toggle="tooltip" data-placement="top" title="View Clearances & Documents"><i class="ti ti-file-type-doc"></i></button>'+'&nbsp;';
                             var dropdown = '<div class="d-inline-block">' +
                                 '<a class="btn btn-success btn-sm dropdown-toggle text-light dropdown-icon" data-bs-toggle="dropdown"></a>' +
                                 '<div class="dropdown-menu">' +
                                 '<a href="#" class="dropdown-item btn-useredit" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-email="' + row.email + '" data-campus="' + row.campus + '" data-dept="' + row.dept + '" data-role="' + row.role + '">' +
                                 '<i class="fas fa-pen"></i> Edit' +
-                                '</a>' +
-                                '<a href="#" class="dropdown-item btn-changepass" data-id="' + row.id + '">' +
-                                '<i class="fas fa-lock"></i> Change Pass' +
                                 '</a>' +
                                 '<a href="#" class="dropdown-item btn-ustatusedit" data-id="' + row.id + '" data-ustatus="' + row.ustatus + '">' +
                                 '<i class="fas fa-toggle-on"></i> Status' +
@@ -82,7 +81,7 @@
                                 '</button>' +
                                 '</div>' +
                                 '</div>';
-                            return dropdown;
+                            return buttons + dropdown;
                         } else {
                             return data;
                         }
@@ -93,8 +92,17 @@
                 $(row).attr('id', 'tr-' + data.id); 
             }
         });
+        dataTable.on('draw', function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
         $(document).on('userAdded', function() {
             dataTable.ajax.reload();
         });
+    });
+
+    $(document).on('click', '.btn-docsview', function () {
+        var id = $(this).data('id');
+
+        $('#viewDocumentModal').modal('show');
     });
 </script>

@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\SignatoryController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AccountSettingController;
 
@@ -50,6 +51,17 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::get('/list/view/fetch', [SignatoryController::class,'show'])->name('signatory.show');
     });
     
+    Route::prefix('/signatories')->group(function () {
+        Route::get('/list/view', [SignatoryController::class,'index'])->name('signatory.index');
+        Route::get('/list/view/fetch', [SignatoryController::class,'show'])->name('signatory.show');
+    });
+
+    Route::prefix('/docs')->group(function () {
+        Route::get('/list/view', [DocumentController::class,'index'])->name('document.index');
+        Route::get('/list/view/fetch', [DocumentController::class,'show'])->name('document.show');
+        Route::post('/list/view/store', [DocumentController::class,'store'])->name('document.store');
+    });
+
     Route::prefix('/system')->group(function () {
         Route::get('/setting/view', [SettingsController::class,'index'])->name('settings.index');
     });

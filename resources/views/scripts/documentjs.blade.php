@@ -5,20 +5,19 @@
         "positionClass": "toast-bottom-left"
     };
     $(document).ready(function() {
-        $('#addUser').submit(function(event) {
+        $('#addDocumentCardForm').submit(function(event) {
             event.preventDefault();
             var formData = $(this).serialize();
 
             $.ajax({
-                url: userCreateRoute,
+                url: documentStoreRoute,
                 type: "POST",
                 data: formData,
                 success: function(response) {
                     if(response.success) {
                         toastr.success(response.message);
                         console.log(response);
-                        $(document).trigger('userAdded');
-                        $('#addUserModal').modal('hide');
+                        $(document).trigger('docsAdded');
                     } else {
                         toastr.error(response.message);
                         console.log(response);
@@ -31,9 +30,9 @@
             });
         });
 
-        var dataTable = $('#applicantlistTable').DataTable({
+        var dataTable = $('#documentlistTable').DataTable({
             "ajax": {
-                "url": applicantReadRoute,
+                "url": documentViewRoute,
                 "type": "GET",
             },
             destroy: true,
@@ -43,30 +42,34 @@
             searching: true,
             paging: true,
             "columns": [
-                {data: 'mtof_id'},
+                {data: 'title'},
                 {
                     data: null,
-                    render: function(data, type, row) {
-                        var firstname = data.fname;
-                        var middleInitial = data.mname ? data.mname.substr(0, 1) + '.' : '';
-                        var lastNameWithExt = data.lname;
+                    render: function (data, type, row) {
+                        let status = '';
 
-                        // Check if ext exists and is not 'N/A' or null
-                        if (data.ext && data.ext !== 'N/A' && data.ext !== null) {
-                            lastNameWithExt += ' ' + data.ext;
-                        }
-
-                        return firstname + ' ' + middleInitial + ' ' + lastNameWithExt;
+                        if (row.status === 'Active') {
+                            status = '<span class="badge bg-success">Active</span>';
+                        } else {
+                            status = '<span class="badge bg-danger">Inactive</span>';
+                        } 
+                        return status;
                     }
                 },
-                {data: 'status'},
-                {data: 'status1'},
+                {
+                    data: 'created_at',
+                    render: function (data, type, row) {
+                        if (type === 'display') {
+                            return moment(data).format('MMMM D, YYYY');
+                        } else {
+                            return data;
+                        }
+                    }
+                },
                 {
                     data: 'id',
                     render: function(data, type, row) {
                         if (type === 'display') {
-                            var buttons = '<button type="button" class="btn btn-sm btn-warning btn-formsview mr-1 text-light" data-id="' + row.id + '"  data-toggle="tooltip" data-placement="top" title="View Forms"><i class="fas fa-file-pdf"></i></button>'+'&nbsp;';
-                                buttons += '<button type="button" class="btn btn-sm btn-info btn-docsview mr-1" data-id="' + row.id + '"  data-toggle="tooltip" data-placement="top" title="View Clearances & Documents"><i class="ti ti-file-type-doc"></i></button>'+'&nbsp;';
                             var dropdown = '<div class="d-inline-block">' +
                                 '<a class="btn btn-success btn-sm dropdown-toggle text-light dropdown-icon" data-bs-toggle="dropdown"></a>' +
                                 '<div class="dropdown-menu">' +
@@ -81,7 +84,7 @@
                                 '</button>' +
                                 '</div>' +
                                 '</div>';
-                            return buttons + dropdown;
+                            return dropdown;
                         } else {
                             return data;
                         }
@@ -92,35 +95,8 @@
                 $(row).attr('id', 'tr-' + data.id); 
             }
         });
-        dataTable.on('draw', function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-        $(document).on('userAdded', function() {
+        $(document).on('docsAdded', function() {
             dataTable.ajax.reload();
         });
-    });
-
-    $(document).on('click', '.btn-formsview', function () {
-        var id = $(this).data('id');
-
-        $('#viewFormOneModal').modal('show');
-        $('#modalContent').html('<div class="text-center">Loading...</div>');
-
-        $.ajax({
-            url: applicantViewRoute + '/' +id,
-            type: 'GET',
-            success: function (response) {
-                $('#modalContent').html(response);
-            },
-            error: function () {
-                $('#modalContent').html('<div class="alert alert-danger">Failed to load data.</div>');
-            }
-        });
-    });
-
-    $(document).on('click', '.btn-docsview', function () {
-        var id = $(this).data('id');
-
-        $('#viewDocumentModal').modal('show');
     });
 </script>

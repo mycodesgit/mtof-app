@@ -289,6 +289,9 @@
     @if (request()->routeIs('applicant.index'))
         @include('scripts.applicantjs')
     @endif
+    @if (request()->routeIs('document.index'))
+        @include('scripts.documentjs')
+    @endif
     @if (request()->routeIs('signatory.index'))
         @include('scripts.signatoryjs')
     @endif

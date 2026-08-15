@@ -3,6 +3,7 @@
 
     $applicantActive = in_array($current_route, ['applicant.index']) ? 'active' : '';
     $signatoryActive = in_array($current_route, ['signatory.index']) ? 'active' : '';
+    $documentsActive = in_array($current_route, ['document.index']) ? 'active' : '';
     $settingsActive = in_array($current_route, ['settings.index']) ? 'active' : '';
 @endphp
 
@@ -15,10 +16,14 @@
             <i class="ti ti-layout-grid"></i><span class="nav-text">Dashboard</span>
         </a>
     </li>
-    
     <li>
         <a class="nav-link {{ $applicantActive}}" href="{{ route('applicant.index') }}">
             <i class="ti ti-users"></i><span class="nav-text">Applicants</span>
+        </a>
+    </li>
+    <li>
+        <a class="nav-link {{ $documentsActive}}" href="{{ route('document.index') }}">
+            <i class="ti ti-file"></i><span class="nav-text">Documents</span>
         </a>
     </li>
     

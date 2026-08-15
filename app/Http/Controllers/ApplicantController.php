@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+
+use Carbon\Carbon;
+use Storage;
 use PDF;
 
 use App\Models\Applicants;
+use App\Models\Documents;
+use App\Models\ApplicantDocs;
 
 class ApplicantController extends Controller
 {
@@ -27,7 +37,6 @@ class ApplicantController extends Controller
 
         return view('applicant.listviewform', compact('applicant'));
     }
-
     public function viewPDFform1($id) 
     {
         $applicant = Applicants::findOrFail($id);
@@ -86,5 +95,72 @@ class ApplicantController extends Controller
 
         $pdf = PDF::loadView('applicant.pdf.aou2',  $data)->setPaper('Legal', 'portrait');
         return $pdf->stream('TRU_AOU2_' . $applicant->id . '.pdf');
+    }
+
+    public function getApplicantDocs($id)
+    {
+        try {
+            // Retrieve document IDs associated with this applicant ID
+            $assignedDocIds = ApplicantDocs::where('appID', $id)
+                ->pluck('docID')
+                ->map(fn($docId) => (int)$docId)
+                ->toArray();
+
+            // Fetch active documents and set 'is_selected' boolean
+            $documents = Documents::where('status', 'Active')
+                ->where('delstatus', 'Not Deleted')
+                ->get()
+                ->map(function ($doc) use ($assignedDocIds) {
+                    $doc->is_selected = in_array((int)$doc->id, $assignedDocIds, true);
+                    return $doc;
+                });
+
+            return response()->json(['data' => $documents]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Error loading documents: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function storeApplicantDocs(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'appID'    => 'required|integer|exists:applicants,id',
+                'docIDs'   => 'nullable|array',
+                'docIDs.*' => 'integer|exists:documents,id',
+            ]);
+
+            $appID = $validated['appID'];
+            $docIDs = $request->input('docIDs', []);
+            $postedBy = Auth::id();
+
+            // 1. Remove unchecked options
+            ApplicantDocs::where('appID', $appID)
+                ->whereNotIn('docID', $docIDs)
+                ->delete();
+
+            // 2. Add or keep checked options
+            foreach ($docIDs as $docID) {
+                ApplicantDocs::updateOrCreate(
+                    ['appID' => $appID, 'docID' => $docID],
+                    ['postedBy' => $postedBy]
+                );
+            }
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Applicant documents updated successfully.'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status'  => false,
+                'message' => 'Failed to save selections: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }

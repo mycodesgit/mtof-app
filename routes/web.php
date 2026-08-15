@@ -44,6 +44,8 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::get('/list/view/modal/file/f3/{id}', [ApplicantController::class,'viewPDFform3'])->name('applicant.viewPDFform3');
         Route::get('/list/view/modal/file/aou1/{id}', [ApplicantController::class,'viewPDFaou1'])->name('applicant.viewPDFaou1');
         Route::get('/list/view/modal/file/aou2/{id}', [ApplicantController::class,'viewPDFaou2'])->name('applicant.viewPDFaou2');
+        Route::get('/applicant/documents/{id}', [ApplicantController::class, 'getApplicantDocs'])->name('applicant.docs.get');
+        Route::post('/applicant/documents/store', [ApplicantController::class, 'storeApplicantDocs'])->name('applicant.docs.store');
     });
 
     Route::prefix('/signatories')->group(function () {

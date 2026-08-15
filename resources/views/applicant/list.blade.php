@@ -224,19 +224,19 @@
     </div>
     
     <div class="modal fade" id="viewDocumentModal" tabindex="-1" role="dialog" aria-labelledby="viewDocumentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h6 class="modal-title" id="viewDocumentModalLabel">Select Documents</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalContent">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
+                    <div class="table-responsive p-2">
+                        <table class="table table-hover" id="doclist" style="width: 100%">
+                            <thead class="table-light">
                                 <tr>
                                     <th>Document Name</th>
-                                    <th>Action</th>
+                                    <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="documentList">
@@ -247,6 +247,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="saveApplicantDocsBtn">
+                        <i class="ti ti-check me-1"></i> Save Selections
+                    </button>
                 </div>
             </div>
         </div>
@@ -255,5 +258,7 @@
     <script>
         var applicantReadRoute = "{{ route('applicant.show') }}";
         var applicantViewRoute = "{{ route('applicant.view', '') }}";
+        var applicantDocSelectRoute = "{{ route('applicant.docs.get', '') }}";
+        var applicantDocSaveRoute = "{{ route('applicant.docs.store') }}";
     </script>
 @endsection

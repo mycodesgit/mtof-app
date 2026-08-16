@@ -37,15 +37,32 @@ class ApplicantController extends Controller
 
         return view('applicant.listviewform', compact('applicant'));
     }
+
     public function viewPDFform1($id) 
     {
         $applicant = Applicants::findOrFail($id);
 
+        // Get assigned document IDs for this applicant
+        $assignedDocIds = ApplicantDocs::where('appID', $id)
+            ->pluck('docID')
+            ->map(fn($docId) => (int)$docId)
+            ->toArray();
+
+        // Fetch active documents and mark selected status
+        $documents = Documents::where('status', 'Active')
+            ->where('delstatus', 'Not Deleted')
+            ->get()
+            ->map(function ($doc) use ($assignedDocIds) {
+                $doc->is_selected = in_array((int)$doc->id, $assignedDocIds, true);
+                return $doc;
+            });
+
         $data = [
             'applicant' => $applicant,
+            'documents' => $documents,
         ];
 
-        $pdf = PDF::loadView('applicant.pdf.form1',  $data)->setPaper('Legal', 'portrait');
+        $pdf = PDF::loadView('applicant.pdf.form1', $data)->setPaper('Legal', 'portrait');
         return $pdf->stream('TRU_Form1_' . $applicant->id . '.pdf');
     }
 

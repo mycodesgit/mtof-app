@@ -78,6 +78,38 @@
         </div>
     </div>
     
+    <div class="modal fade" id="editDocumentModal" tabindex="-1" role="dialog" aria-labelledby="editDocumentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="editDocumentModalLabel">Edit Document Title</h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editDocumentForm">
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="editDocumentId">
+                        <div class="col-md-12 mb-3">
+                            <label for="editDocumentName">Document Title: <span class="text-danger">*</span></label>
+                            <textarea rows="4" name="item_descrip" id="editDocumentName" class="form-control" style="height: 350px; min-height: 350px; resize: vertical;"></textarea>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="editDocumentStatus">Status: <span class="text-danger">*</span></label>
+                            <select id="editDocumentStatus" name="category_id" class="form-control"style="width: 100%;">
+                                <option value="">-- Select --</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline-success">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         var documentViewRoute = "{{ route('document.show') }}";
         var documentStoreRoute = "{{ route('document.store') }}";

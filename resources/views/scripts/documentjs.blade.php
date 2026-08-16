@@ -73,13 +73,13 @@
                             var dropdown = '<div class="d-inline-block">' +
                                 '<a class="btn btn-success btn-sm dropdown-toggle text-light dropdown-icon" data-bs-toggle="dropdown"></a>' +
                                 '<div class="dropdown-menu">' +
-                                '<a href="#" class="dropdown-item btn-useredit" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-email="' + row.email + '" data-campus="' + row.campus + '" data-dept="' + row.dept + '" data-role="' + row.role + '">' +
+                                '<a href="#" class="dropdown-item btn-documentedit" data-id="' + row.id + '" data-documentname="' + row.documentname + '">' +
                                 '<i class="fas fa-pen"></i> Edit' +
                                 '</a>' +
-                                '<a href="#" class="dropdown-item btn-ustatusedit" data-id="' + row.id + '" data-ustatus="' + row.ustatus + '">' +
+                                '<a href="#" class="dropdown-item btn-dstatusedit" data-id="' + row.id + '" data-dstatus="' + row.dstatus + '">' +
                                 '<i class="fas fa-toggle-on"></i> Status' +
                                 '</a>' +
-                                '<button type="button" value="' + data + '" class="dropdown-item user-delete">' +
+                                '<button type="button" value="' + data + '" class="dropdown-item document-delete">' +
                                 '<i class="fas fa-trash"></i> Delete' +
                                 '</button>' +
                                 '</div>' +
@@ -98,5 +98,13 @@
         $(document).on('docsAdded', function() {
             dataTable.ajax.reload();
         });
+    });
+
+    $(document).on('click', '.btn-documentedit', function() {
+        var id = $(this).data('id');
+        var documentName = $(this).data('documentname');
+        $('#editDocumentId').val(id);
+        $('#editDocumentName').val(documentName);
+        $('#editDocumentModal').modal('show');
     });
 </script>

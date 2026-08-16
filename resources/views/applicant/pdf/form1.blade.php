@@ -101,6 +101,10 @@
             width: 12px;
             height: 12px;
             border: 1px solid #000;
+            text-align: center;
+            line-height: 10px;
+            font-size: 15px;
+            font-weight: bold;
             margin-right: 5px;
             vertical-align: middle;
         }
@@ -206,19 +210,27 @@
         </li>
         <li>
             That the driver bears the following clearances and documents:
-            <table class="checkbox-table">
-                <tr>
-                    <td style="width: 50%;"><span class="checkbox-box"></span> Health Certificate</td>
-                    <td style="width: 50%;"><span class="checkbox-box"></span> Cedula</td>
-                </tr>
-                <tr>
-                    <td><span class="checkbox-box"></span> Barangay Clearance</td>
-                    <td><span class="checkbox-box"></span> Police Clearance</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><span class="checkbox-box"></span> Cert. of Orientation on Traffic Rules</td>
-                </tr>
-            </table>
+            <table class="checkbox-table" style="width: 100%;">
+        @foreach($documents->chunk(2) as $chunk)
+            <tr>
+                @foreach($chunk as $doc)
+                    <td style="width: 50%;">
+                        <span class="checkbox-box">
+                            @if($doc->is_selected)
+                                <span style="font-family: DejaVu Sans, sans-serif;">&#10003;</span>
+                            @endif
+                        </span>
+                        {{ $doc->title }} {{-- Replace with your actual column name (e.g., name, doc_title) --}}
+                    </td>
+                @endforeach
+
+                {{-- Fill empty cell if row has an odd number of items --}}
+                @if($chunk->count() < 2)
+                    <td style="width: 50%;"></td>
+                @endif
+            </tr>
+        @endforeach
+    </table>
         </li>
         <li>I hereby certify that the foregoing facts are true and correct.</li>
     </ol>

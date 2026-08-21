@@ -6,8 +6,9 @@ use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ApplicantController;
-use App\Http\Controllers\SignatoryController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\SignatoryController;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\AccountSettingController;
 
@@ -48,20 +49,27 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::post('/applicant/documents/store', [ApplicantController::class, 'storeApplicantDocs'])->name('applicant.docs.store');
     });
 
-    Route::prefix('/signatories')->group(function () {
-        Route::get('/list/view', [SignatoryController::class,'index'])->name('signatory.index');
-        Route::get('/list/view/fetch', [SignatoryController::class,'show'])->name('signatory.show');
-    });
-    
-    Route::prefix('/signatories')->group(function () {
-        Route::get('/list/view', [SignatoryController::class,'index'])->name('signatory.index');
-        Route::get('/list/view/fetch', [SignatoryController::class,'show'])->name('signatory.show');
-    });
-
     Route::prefix('/docs')->group(function () {
         Route::get('/list/view', [DocumentController::class,'index'])->name('document.index');
         Route::get('/list/view/fetch', [DocumentController::class,'show'])->name('document.show');
         Route::post('/list/view/store', [DocumentController::class,'store'])->name('document.store');
+        Route::post('/list/view/update', [DocumentController::class,'update'])->name('document.update');
+        Route::post('/list/view/delete/{id}', [DocumentController::class,'destroy'])->name('document.destroy');
+    });
+
+    Route::prefix('/signatories')->group(function () {
+        Route::get('/list/view', [SignatoryController::class,'index'])->name('signatory.index');
+        Route::get('/list/view/fetch', [SignatoryController::class,'show'])->name('signatory.show');
+        Route::post('/list/view/store', [SignatoryController::class,'store'])->name('signatory.store');
+        Route::post('/list/view/update', [SignatoryController::class,'update'])->name('signatory.update');
+    });
+
+    Route::prefix('/positions')->group(function () {
+        Route::get('/list/view', [PositionController::class,'index'])->name('position.index');
+        Route::get('/list/view/fetch', [PositionController::class,'show'])->name('position.show');
+        Route::post('/list/view/store', [PositionController::class,'store'])->name('position.store');
+        Route::post('/list/view/update', [PositionController::class,'update'])->name('position.update');
+        Route::post('/list/view/delete/{id}', [PositionController::class,'destroy'])->name('position.destroy');
     });
 
     Route::prefix('/system')->group(function () {

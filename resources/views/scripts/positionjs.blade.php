@@ -5,20 +5,20 @@
         "positionClass": "toast-bottom-left"
     };
     $(document).ready(function() {
-        $('#addUser').submit(function(event) {
+        $('#addPositionCardForm').submit(function(event) {
             event.preventDefault();
             var formData = $(this).serialize();
 
             $.ajax({
-                url: userCreateRoute,
+                url: positionStoreRoute,
                 type: "POST",
                 data: formData,
                 success: function(response) {
                     if(response.success) {
                         toastr.success(response.message);
                         console.log(response);
-                        $(document).trigger('signatoryAdded');
-                        $('#addsignatoryModal').modal('hide');
+                        $(document).trigger('positionAdded');
+                        $('#addPositionCardForm')[0].reset();
                     } else {
                         toastr.error(response.message);
                         console.log(response);
@@ -31,9 +31,9 @@
             });
         });
 
-        var dataTable = $('#signatorylistTable').DataTable({
+        var dataTable = $('#positionlistTable').DataTable({
             "ajax": {
-                "url": signatoryReadRoute,
+                "url": positionViewRoute,
                 "type": "GET",
             },
             destroy: true,
@@ -43,34 +43,28 @@
             searching: true,
             paging: true,
             "columns": [
-                {
-                    data: null,
-                    render: function(data, type, row) {
-                        var firstname = data.sigfname;
-                        var middleInitial = data.sigmname ? data.sigmname.substr(0, 1) + '.' : '';
-                        var lastNameWithExt = data.siglname;
-
-                        // Check if ext exists and is not 'N/A' or null
-                        if (data.sigext && data.sigext !== 'N/A' && data.sigext !== null) {
-                            lastNameWithExt += ' ' + data.sigext;
-                        }
-
-                        return firstname + ' ' + middleInitial + ' ' + lastNameWithExt;
-                    }
-                },
-                {data: 'position_name'},
-                {data: 'postedBy'},
+                {data: 'name'},
                 {
                     data: null,
                     render: function (data, type, row) {
                         let status = '';
 
-                        if (data.status == 1) {
-                            status = '<span class="badge bg-success">Enabled</span>';
+                        if (row.status === 'Active') {
+                            status = '<span class="badge bg-success">Active</span>';
                         } else {
-                            status = '<span class="badge bg-danger">Disabled</span>';
+                            status = '<span class="badge bg-danger">Inactive</span>';
                         } 
                         return status;
+                    }
+                },
+                {
+                    data: 'created_at',
+                    render: function (data, type, row) {
+                        if (type === 'display') {
+                            return moment(data).format('MMMM D, YYYY');
+                        } else {
+                            return data;
+                        }
                     }
                 },
                 {
@@ -80,13 +74,10 @@
                             var dropdown = '<div class="d-inline-block">' +
                                 '<a class="btn btn-success btn-sm dropdown-toggle text-light dropdown-icon" data-bs-toggle="dropdown"></a>' +
                                 '<div class="dropdown-menu">' +
-                                '<a href="#" class="dropdown-item btn-signatoryedit" data-id="' + row.id + '" data-sigfname="' + row.sigfname + '" data-sigmname="' + row.sigmname + '" data-siglname="' + row.siglname + '" data-sigext="' + row.sigext + '" data-sigposition="' + row.sigposition + '">' +
+                                '<a href="#" class="dropdown-item btn-positionedit" data-id="' + row.id + '" data-name="' + row.name + '" data-status="' + row.status + '">' +
                                 '<i class="fas fa-pen"></i> Edit' +
                                 '</a>' +
-                                '<a href="#" class="dropdown-item btn-ustatusedit" data-id="' + row.id + '" data-ustatus="' + row.ustatus + '">' +
-                                '<i class="fas fa-toggle-on"></i> Status' +
-                                '</a>' +
-                                '<button type="button" value="' + data + '" class="dropdown-item user-delete">' +
+                                '<button type="button" value="' + data + '" class="dropdown-item position-delete">' +
                                 '<i class="fas fa-trash"></i> Delete' +
                                 '</button>' +
                                 '</div>' +
@@ -102,37 +93,29 @@
                 $(row).attr('id', 'tr-' + data.id); 
             }
         });
-        $(document).on('signatoryAdded', function() {
+        $(document).on('positionAdded', function() {
             dataTable.ajax.reload();
         });
     });
 
-    $(document).on('click', '.btn-signatoryedit', function() {
+    $(document).on('click', '.btn-positionedit', function() {
         var id = $(this).data('id');
-        var fName = $(this).data('sigfname');
-        var mName = $(this).data('sigmname');
-        var lName = $(this).data('siglname');
-        var exName = $(this).data('sigext');
-        var positionName = $(this).data('sigposition');
+        var positionName = $(this).data('name');
         var statusName = $(this).data('status');
 
-        $('#editsigId').val(id);
-        $('#editFname').val(fName);
-        $('#editMname').val(mName);
-        $('#editLname').val(lName);
-        $('#editExt').val(exName);
-        $('#editPosition').val(positionName);
-        $('#editDocumentStatus').val(statusName);
+        $('#editPositionId').val(id);
+        $('#editPositionName').val(positionName);
+        $('#editPositionStatus').val(statusName);
 
-        $('#editsignatoryModal').modal('show');
+        $('#editPositionModal').modal('show');
     });
 
-    $('#editSignatoryForm').submit(function(event) {
+    $('#editDocumentForm').submit(function(event) {
         event.preventDefault();
         var formData = $(this).serialize();
 
         $.ajax({
-            url: signatoryUpdateRoute,
+            url: positionUpdateRoute,
             type: "POST",
             data: formData,
             headers: {
@@ -141,8 +124,8 @@
             success: function(response) {
                 if(response.success) {
                     toastr.success(response.message);
-                    $('#editsignatoryModal').modal('hide');
-                    $(document).trigger('signatoryAdded');
+                    $('#editPositionModal').modal('hide');
+                    $(document).trigger('positionAdded');
                 } else {
                     toastr.error(response.message);
                 }
@@ -152,5 +135,44 @@
                 toastr.error(errorMessage);
             }
         });
+    });
+
+    $(document).on('click', '.position-delete', function(e) {
+        var id = $(this).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to recover this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: positionDeleteRoute.replace(':id', id),
+                    success: function(response) {
+                        $("#tr-" + id).delay(1000).fadeOut();
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Successfully Deleted!',
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        if(response.success) {
+                            toastr.success(response.message);
+                            console.log(response);
+                        }
+                    }
+                });
+            }
+        })
     });
 </script>

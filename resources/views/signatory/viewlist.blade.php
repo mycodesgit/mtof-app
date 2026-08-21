@@ -54,7 +54,7 @@
                     <div class="modal-body">
                         <input type="hidden" name="id" id="editStudFeeId">
                         <div class="form-group">
-                            <label for="addFname">First Name: <span class="text-danger">*</span></label>
+                            <label for="editFname">First Name: <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" placeholder="Enter First name" id="addFname" name="sigfname">
                         </div>
                         <div class="form-group mt-3">
@@ -66,7 +66,7 @@
                             <input type="text" class="form-control" placeholder="Enter Last name" id="addLname" name="sigfname">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="addext">Last Name: <span class="text-danger">*</span></label>
+                            <label for="addext">Extension Name: <span class="text-danger">*</span></label>
                             <select name="sigext" id="addext" class="form-control">
                                 <option value=""> ---Select--- </option>
                                 <option value="Jr.">Jr.</option>
@@ -95,33 +95,46 @@
         </div>
     </div>
 
-    <div class="modal fade mt-6" id="addsignatoryModal" role="dialog" aria-labelledby="addsignatoryModalLabel" aria-hidden="true">
+    <div class="modal fade mt-6" id="editsignatoryModal" role="dialog" aria-labelledby="editsignatoryModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addsignatureModalLabel">Add</h5>
+                    <h5 class="modal-title" id="editsignatureModalLabel">Edit Signatory</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="addSignatoryForm">
+                <form id="editSignatoryForm">
                     <div class="modal-body">
-                        <input type="hidden" name="id" id="editStudFeeId">
+                        <input type="hidden" name="id" id="editsigId">
                         <div class="form-group">
-                            <label for="addFname">First Name: <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-sm" id="addFname" name="sigfname">
+                            <label for="editFname">First Name: <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()" id="editFname" name="sigfname">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="addMname">Middle Name:</label>
-                            <input type="text" class="form-control form-control-sm" id="addMname" name="sigfname">
+                            <label for="editMname">Middle Name:</label>
+                            <input type="text" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()" id="editMname" name="sigmname">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="addLname">Last Name: <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control form-control-sm" id="addLname" name="sigfname">
+                            <label for="editLname">Last Name: <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()" id="editLname" name="siglname">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="addPosition">Position: <span class="text-danger">*</span></label>
-                            <select class="form-control form-control-sm select2" id="addPosition" name="sigposition">
+                            <label for="editExt">Extension Name: <span class="text-danger">*</span></label>
+                            <select name="sigext" id="editExt" class="form-control form-control-sm">
+                                <option value=""> ---Select--- </option>
+                                <option value="Jr.">Jr.</option>
+                                <option value="Sr.">Sr.</option>
+                                <option value="II">II</option>
+                                <option value="III">III</option>
+                                <option value="IV">IV</option>
+                                <option value="V">V</option>
+                                <option value="VI">VI</option>
+                            </select>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="editPosition">Position: <span class="text-danger">*</span></label>
+                            <select class="form-control form-control-sm" id="editPosition" name="sigposition">
                                 <option disabled selected> ---Select---</option>
-                                <option value="Secretary to Sanguniang Bayan">Secretary to Sanguniang Bayan</option>
+                                <option value="Secretary to the Sangguniang Bayan">Secretary to the Sangguniang Bayan</option>
                             </select>
                         </div>
                     </div>
@@ -136,6 +149,8 @@
 
     <script>
         var signatoryReadRoute = "{{ route('signatory.show') }}";
+        var signatoryStoreRoute = "{{ route('signatory.store') }}";
+        var signatoryUpdateRoute = "{{ route('signatory.update', ['id' => ':id']) }}";
     </script>
 @endsection
  

@@ -295,6 +295,9 @@
     @if (request()->routeIs('signatory.index'))
         @include('scripts.signatoryjs')
     @endif
+    @if (request()->routeIs('position.index'))
+        @include('scripts.positionjs')
+    @endif
 </body>
 
 </html>

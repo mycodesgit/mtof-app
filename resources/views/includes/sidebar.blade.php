@@ -2,8 +2,9 @@
     $current_route=request()->route()->getName();
 
     $applicantActive = in_array($current_route, ['applicant.index']) ? 'active' : '';
-    $signatoryActive = in_array($current_route, ['signatory.index']) ? 'active' : '';
     $documentsActive = in_array($current_route, ['document.index']) ? 'active' : '';
+    $signatoryActive = in_array($current_route, ['signatory.index']) ? 'active' : '';
+    $positionActive = in_array($current_route, ['position.index']) ? 'active' : '';
     $settingsActive = in_array($current_route, ['settings.index']) ? 'active' : '';
 @endphp
 
@@ -30,6 +31,12 @@
     <li>
         <a class="nav-link {{ $signatoryActive }}" href="{{ route('signatory.index') }}">
             <i class="ti ti-signature"></i><span class="nav-text">Signatories</span>
+        </a>
+    </li>
+
+    <li>
+        <a class="nav-link {{ $positionActive }}" href="{{ route('position.index') }}">
+            <i class="ti ti-table"></i><span class="nav-text">Positions</span>
         </a>
     </li>
 

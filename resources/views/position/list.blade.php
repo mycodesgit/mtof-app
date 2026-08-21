@@ -1,48 +1,37 @@
 @extends('layouts.app')
 
 @section('title')
-    MTOF - Document's List
+    MTOF - Position's List
 @endsection
 
 @section('body')
     <div class="row ">
         <div class="col-md-12">
             <div class="mb-6">
-                <h1 class="fs-5 mb-4">Documents</h1>
+                <h1 class="fs-5 mb-4">Positions</h1>
                 <div class="row g-3">
                     <div class="col-md-4">
                         <div class="card card-animate">
                             <div class="card-header pt-3">
                                 <h6 class="card-title">
-                                    <i class="ti ti-plus"></i> Add New Documents
+                                    <i class="ti ti-plus"></i> Add New Position
                                 </h6>
                             </div>
                             <div class="card-body">
-                                <form id="addDocumentCardForm" action="#" method="POST">
+                                <form id="addPositionCardForm" action="#" method="POST">
                                     @csrf
                                     
                                     <div class="mb-3">
-                                        <label for="title" class="form-label">Document Title <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" placeholder="Enter document title" required>
-                                        @error('title')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="status" class="form-label">Status</label>
-                                        <select class="form-select @error('status') is-invalid @enderror" id="status" name="status">
-                                            <option value="Active" selected>Active</option>
-                                            <option value="Inactive">Inactive</option>
-                                        </select>
-                                        @error('status')
+                                        <label for="position" class="form-label">Position <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control @error('position') is-invalid @enderror" id="position" name="name" placeholder="Enter Position" required>
+                                        @error('position')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
 
                                     <div class="d-grid gap-2">
                                         <button type="submit" class="btn btn-outline-success">
-                                            <i class="ti ti-check"></i> Save Document
+                                            <i class="ti ti-check"></i> Save
                                         </button>
                                     </div>
                                 </form>
@@ -53,14 +42,14 @@
                         <div class="card card-animate">
                             <div class="card-header pt-3">
                                 <h6 class="card-title">
-                                    <i class="ti ti-file"></i> List of Documents
+                                    <i class="ti ti-file"></i> List of Positions
                                 </h6>
                             </div>
                             <div class="card-body">
-                                <table id="documentlistTable" class="table table-hover">
+                                <table id="positionlistTable" class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Document Name</th>
+                                            <th>Postion Title</th>
                                             <th>Status</th>
                                             <th>Date</th>
                                             <th width="10%">Actions</th>
@@ -78,23 +67,23 @@
         </div>
     </div>
     
-    <div class="modal fade" id="editDocumentModal" tabindex="-1" role="dialog" aria-labelledby="editDocumentModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editPositionModal" tabindex="-1" role="dialog" aria-labelledby="editPositionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="editDocumentModalLabel">Edit Document Title</h6>
+                    <h6 class="modal-title" id="editPositionModalLabel">Edit Document Title</h6>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="editDocumentForm">
+                <form id="editPositionForm">
                     <div class="modal-body">
-                        <input type="hidden" name="id" id="editDocumentId">
+                        <input type="hidden" name="id" id="editPositionId">
                         <div class="col-md-12 mb-3">
-                            <label for="editDocumentName">Document Title: <span class="text-danger">*</span></label>
-                            <input name="title" id="editDocumentName" class="form-control">
+                            <label for="editPositionName">Position Title: <span class="text-danger">*</span></label>
+                            <input name="name" id="editPositionName" class="form-control">
                         </div>
                         <div class="col-md-12 mb-3">
-                            <label for="editDocumentStatus">Status: <span class="text-danger">*</span></label>
-                            <select id="editDocumentStatus" name="status" class="form-control"style="width: 100%;">
+                            <label for="editPositionStatus">Status: <span class="text-danger">*</span></label>
+                            <select id="editPositionStatus" name="status" class="form-control"style="width: 100%;">
                                 <option value="">-- Select --</option>
                                 <option value="Active">Active</option>
                                 <option value="Inactive">Inactive</option>
@@ -111,10 +100,10 @@
     </div>
 
     <script>
-        var documentViewRoute = "{{ route('document.show') }}";
-        var documentStoreRoute = "{{ route('document.store') }}";
-        var documentStoreRoute = "{{ route('document.store') }}";
-        var documentUpdateRoute = "{{ route('document.update', ['id' => ':id']) }}";
-        var documentDeleteRoute = "{{ route('document.destroy', ['id' => ':id']) }}";
+        var positionViewRoute = "{{ route('position.show') }}";
+        var positionStoreRoute = "{{ route('position.store') }}";
+        var positionStoreRoute = "{{ route('position.store') }}";
+        var positionUpdateRoute = "{{ route('position.update', ['id' => ':id']) }}";
+        var positionDeleteRoute = "{{ route('position.destroy', ['id' => ':id']) }}";
     </script>
 @endsection

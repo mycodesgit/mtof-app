@@ -13,18 +13,18 @@ use Carbon\Carbon;
 use Storage;
 use PDF;
 
-use App\Models\Documents;
+use App\Models\Positions;
 
-class DocumentController extends Controller
+class PositionController extends Controller
 {
     public function index()
     {
-        return view('document.viewlist');
+        return view('position.list');
     }
 
     public function show(Request $request)
     {  
-        $data = Documents::all();
+        $data = Positions::all();
         
         return response()->json(['data' => $data]);
     }
@@ -33,27 +33,24 @@ class DocumentController extends Controller
     {
         if ($request->isMethod('post')) {
             $validated = $request->validate([
-                'title'  => 'required|string|max:255',
-                'status' => 'required|in:Active,Inactive',
+                'name'  => 'required|string|max:255',
             ]);
 
-            $docName = $request->input('title'); 
-            $existingDocs = Documents::where('title', $docName)->first();
+            $positionName = $request->input('name'); 
+            $existingDocs = Positions::where('name', $positionName)->first();
 
             if ($existingDocs) {
-                return response()->json(['error' => true, 'message' => 'Document already exists!']);
+                return response()->json(['error' => true, 'message' => 'Position already exists!']);
             }
 
             try {
-                Documents::create([
-                    'title'     => $validated['title'],
-                    'status'    => $validated['status'],
-                    'delstatus' => 'Not Deleted',
+                Positions::create([
+                    'name'     => $validated['name'],
                 ]);
 
-                return response()->json(['success' => true, 'message' => 'Document stored successfully!']);
+                return response()->json(['success' => true, 'message' => 'Position stored successfully!']);
             } catch (\Exception $e) {
-                return response()->json(['error' => true, 'message' => 'Failed to store Document!']);
+                return response()->json(['error' => true, 'message' => 'Failed to store Position!']);
             }
         }
     }
@@ -68,13 +65,13 @@ class DocumentController extends Controller
 
         try {
             $docName = $request->input('title'); 
-            $existingDocs = Documents::where('title', $docName)->where('id', '!=', $request->input('id'))->first();
+            $existingDocs = Positions::where('title', $docName)->where('id', '!=', $request->input('id'))->first();
 
             if ($existingDocs) {
                 return response()->json(['error'=> true, 'message' => 'Document already exists!']);
             }
 
-            $doc = Documents::findOrFail($request->input('id'));
+            $doc = Positions::findOrFail($request->input('id'));
             $doc->update([
                 'title'     => $request->input('title'),
                 'status'    => $request->input('status'),
@@ -87,7 +84,7 @@ class DocumentController extends Controller
 
     public function destroy($id) 
     {
-        $doc = Documents::find($id);
+        $doc = Positions::find($id);
         if ($doc) {
             $doc->delstatus = 'Deleted';
             $doc->save();

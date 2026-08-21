@@ -73,11 +73,8 @@
                             var dropdown = '<div class="d-inline-block">' +
                                 '<a class="btn btn-success btn-sm dropdown-toggle text-light dropdown-icon" data-bs-toggle="dropdown"></a>' +
                                 '<div class="dropdown-menu">' +
-                                '<a href="#" class="dropdown-item btn-documentedit" data-id="' + row.id + '" data-documentname="' + row.documentname + '">' +
+                                '<a href="#" class="dropdown-item btn-documentedit" data-id="' + row.id + '" data-title="' + row.title + '" data-status="' + row.status + '">' +
                                 '<i class="fas fa-pen"></i> Edit' +
-                                '</a>' +
-                                '<a href="#" class="dropdown-item btn-dstatusedit" data-id="' + row.id + '" data-dstatus="' + row.dstatus + '">' +
-                                '<i class="fas fa-toggle-on"></i> Status' +
                                 '</a>' +
                                 '<button type="button" value="' + data + '" class="dropdown-item document-delete">' +
                                 '<i class="fas fa-trash"></i> Delete' +
@@ -102,9 +99,79 @@
 
     $(document).on('click', '.btn-documentedit', function() {
         var id = $(this).data('id');
-        var documentName = $(this).data('documentname');
+        var documentName = $(this).data('title');
+        var statusName = $(this).data('status');
+
         $('#editDocumentId').val(id);
         $('#editDocumentName').val(documentName);
+        $('#editDocumentStatus').val(statusName);
+
         $('#editDocumentModal').modal('show');
+    });
+
+    $('#editDocumentForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: documentUpdateRoute,
+            type: "POST",
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if(response.success) {
+                    toastr.success(response.message);
+                    $('#editDocumentModal').modal('hide');
+                    $(document).trigger('docsAdded');
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error, message) {
+                var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                toastr.error(errorMessage);
+            }
+        });
+    });
+
+    $(document).on('click', '.document-delete', function(e) {
+        var id = $(this).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to recover this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: documentDeleteRoute.replace(':id', id),
+                    success: function(response) {
+                        $("#tr-" + id).delay(1000).fadeOut();
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Successfully Deleted!',
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        if(response.success) {
+                            toastr.success(response.message);
+                            console.log(response);
+                        }
+                    }
+                });
+            }
+        })
     });
 </script>

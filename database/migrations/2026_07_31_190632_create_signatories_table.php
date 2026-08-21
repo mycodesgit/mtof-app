@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('sigmname')->nullable();
             $table->string('siglname');
             $table->string('sigext')->nullable();
-            $table->string('sigposition');
+            $table->foreignId('sigposition')->constrained('positions');
             $table->string('postedBy');
             $table->enum('status', ['1', '2'])->default('1');
             $table->timestamps();

@@ -18,4 +18,16 @@ class Signatories extends Model
         'postedBy',
         'status'
     ];
+    
+    protected $appends = ['position_name'];
+
+    public function position()
+    {
+        return $this->belongsTo(Positions::class, 'sigposition');
+    }
+
+    public function getPositionNameAttribute()
+    {
+        return $this->position ? $this->position->name : null;
+    }
 }

@@ -40193,3 +40193,26 @@ html.theme-transitioning *:after {
     background-color: #65ac86 !important;
     color: #ffffff !important;
 }
+
+/* Container background override */
+[data-bs-theme="dark"] .nav-pills.bg-light {
+    background-color: #1a1d20 !important;
+    border: 1px solid #343a40 !important;
+}
+
+/* Inactive nav link text color */
+[data-bs-theme="dark"] .nav-pills .nav-link {
+    color: #adb5bd !important;
+}
+
+/* Inactive nav link hover state */
+[data-bs-theme="dark"] .nav-pills .nav-link:hover {
+    color: #ffffff !important;
+    background-color: #343a40 !important;
+}
+
+/* Active tab state */
+[data-bs-theme="dark"] .nav-pills .nav-link.active {
+    background-color: #65ac86 !important;
+    color: #ffffff !important;
+}

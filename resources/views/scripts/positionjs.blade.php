@@ -110,7 +110,7 @@
         $('#editPositionModal').modal('show');
     });
 
-    $('#editDocumentForm').submit(function(event) {
+    $('#editPositionForm').submit(function(event) {
         event.preventDefault();
         var formData = $(this).serialize();
 

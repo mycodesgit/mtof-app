@@ -24,7 +24,7 @@ class DocumentController extends Controller
 
     public function show(Request $request)
     {  
-        $data = Documents::all();
+        $data = Documents::where('delstatus', '=', 'Not Deleted')->get();
         
         return response()->json(['data' => $data]);
     }

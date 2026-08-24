@@ -13,13 +13,16 @@ use Carbon\Carbon;
 use Storage;
 use PDF;
 
+use App\Models\Positions;
 use App\Models\Signatories;
 
 class SignatoryController extends Controller
 {
     public function index()
     {
-        return view('signatory.viewlist');
+        $pos = Positions::all();
+
+        return view('signatory.viewlist', compact('pos'));
     }
 
     public function show(Request $request)

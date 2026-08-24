@@ -59,37 +59,37 @@ class PositionController extends Controller
     {
         $request->validate([
             'id' => 'required',
-            'title'  => 'required|string|max:255',
+            'name'  => 'required|string|max:255',
             'status' => 'required|in:Active,Inactive',
         ]);
 
         try {
-            $docName = $request->input('title'); 
-            $existingDocs = Positions::where('title', $docName)->where('id', '!=', $request->input('id'))->first();
+            $posName = $request->input('name'); 
+            $existingPosition = Positions::where('name', $posName)->where('id', '!=', $request->input('id'))->first();
 
-            if ($existingDocs) {
-                return response()->json(['error'=> true, 'message' => 'Document already exists!']);
+            if ($existingPosition) {
+                return response()->json(['error'=> true, 'message' => 'Position already exists!']);
             }
 
-            $doc = Positions::findOrFail($request->input('id'));
-            $doc->update([
-                'title'     => $request->input('title'),
+            $pos = Positions::findOrFail($request->input('id'));
+            $pos->update([
+                'name'     => $request->input('name'),
                 'status'    => $request->input('status'),
         ]);
             return response()->json(['success' => true, 'message' => 'Updated Successfully']);
         } catch (\Exception $e) {
-            return response()->json(['error' => true, 'message' => 'Failed to update Document!']);
+            return response()->json(['error' => true, 'message' => 'Failed to update Position!']);
         }
     }
 
     public function destroy($id) 
     {
-        $doc = Positions::find($id);
-        if ($doc) {
-            $doc->delstatus = 'Deleted';
-            $doc->save();
-            return response()->json(['success'=> true, 'message'=>'Document updated to deleted successfully']);
+        $pos = Positions::find($id);
+        if ($pos) {
+            $pos->pdelstatus = 'Deleted';
+            $pos->save();
+            return response()->json(['success'=> true, 'message'=>'Position updated to deleted successfully']);
         }
-        return response()->json(['error'=> true, 'message'=>'Item not found']);
+        return response()->json(['error'=> true, 'message'=>'Position not found']);
     }
 }

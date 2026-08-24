@@ -19,7 +19,7 @@
     <!-- Toastr -->
     <link rel="stylesheet" href="{{ asset('uilibs/plugins/toastr/toastr.min.css') }}">
 
-    <style>
+    {{-- <style>
         /* Base Container & Background Settings */
         .login-wrapper {
             min-height: 100vh;
@@ -172,6 +172,170 @@
         [data-bs-theme="dark"] .text-muted,
         [data-bs-theme="dark"] .text-secondary {
             color: #94a3b8 !important;
+        }
+        [data-bs-theme="dark"] .bg-particle {
+            color: rgba(255, 255, 255, 0.07);
+        }
+    </style> --}}
+    <style>
+        /* Base Container & Background Settings */
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background-color: #f8fafc;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- Dark Mode Radial Background --- */
+        [data-bs-theme="dark"] .login-wrapper {
+            background: radial-gradient(circle at 20% 30%, #2b3035 0%, #212529 60%, #1a1d20 100%) !important;
+        }
+
+        /* Subtle Background Grid overlay in Dark Mode */
+        [data-bs-theme="dark"] .login-wrapper::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            pointer-events: none;
+        }
+
+        /* Base Canvas Container for Background Particles */
+        .bg-particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Floating Animated Background Icons */
+        .bg-particle {
+            position: absolute;
+            bottom: -50px;
+            color: rgba(25, 135, 84, 0.15); /* Light green tint in Light mode */
+            font-size: 1.8rem;
+            animation: floatUp 15s infinite linear;
+            pointer-events: none;
+        }
+
+        .bg-particle:nth-child(1) { left: 10%; font-size: 2.2rem; animation-duration: 18s; animation-delay: 0s; }
+        .bg-particle:nth-child(2) { left: 25%; font-size: 1.4rem; animation-duration: 12s; animation-delay: 2s; }
+        .bg-particle:nth-child(3) { left: 45%; font-size: 2.5rem; animation-duration: 22s; animation-delay: 4s; }
+        .bg-particle:nth-child(4) { left: 65%; font-size: 1.8rem; animation-duration: 16s; animation-delay: 1s; }
+        .bg-particle:nth-child(5) { left: 85%; font-size: 2.0rem; animation-duration: 14s; animation-delay: 5s; }
+        .bg-particle:nth-child(6) { left: 92%; font-size: 1.5rem; animation-duration: 19s; animation-delay: 3s; }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.6;
+            }
+            85% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Hero Text Styling */
+        .hero-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            line-height: 1.15;
+            color: #0f172a;
+        }
+
+        .hero-title .highlight {
+            color: #198754;
+        }
+
+        [data-bs-theme="dark"] .hero-title {
+            color: #ffffff;
+        }
+
+        [data-bs-theme="dark"] .hero-title .highlight {
+            color: #65ac86; /* Matches sidebar/button accent color */
+        }
+
+        .hero-badge {
+            background-color: rgba(25, 135, 84, 0.1);
+            color: #198754;
+            border: 1px solid rgba(25, 135, 84, 0.2);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 0.35rem 0.85rem;
+            border-radius: 50rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        [data-bs-theme="dark"] .hero-badge {
+            background-color: rgba(101, 172, 134, 0.12);
+            color: #65ac86;
+            border-color: rgba(101, 172, 134, 0.25);
+        }
+
+        .feature-pill {
+            background-color: rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            color: #475569;
+            font-size: 0.825rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 50rem;
+        }
+
+        [data-bs-theme="dark"] .feature-pill {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+            color: #adb5bd;
+        }
+
+        /* Elevate Content over background particles */
+        .login-card-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Dark Mode Card & Input Overrides */
+        [data-bs-theme="dark"] .card {
+            background-color: #2b3035 !important;
+            border-color: #343a40 !important;
+            color: #f8f9fa !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35) !important;
+        }
+        [data-bs-theme="dark"] .form-control {
+            background-color: #1a1d20 !important;
+            border-color: #343a40 !important;
+            color: #f8f9fa !important;
+        }
+        [data-bs-theme="dark"] .form-control:focus {
+            background-color: #1a1d20 !important;
+            border-color: #65ac86 !important;
+            box-shadow: 0 0 0 0.25rem rgba(101, 172, 134, 0.25) !important;
+        }
+        [data-bs-theme="dark"] .form-control::placeholder {
+            color: #6c757d !important;
+        }
+        [data-bs-theme="dark"] .text-muted,
+        [data-bs-theme="dark"] .text-secondary {
+            color: #adb5bd !important;
         }
         [data-bs-theme="dark"] .bg-particle {
             color: rgba(255, 255, 255, 0.07);

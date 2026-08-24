@@ -21,7 +21,7 @@
                 success: function(response) {
                     if(response.success) {
                         toastr.success(response.message);
-                        $(document).trigger('userAdded');
+                        $(document).trigger('applicantAdded');
                         $('#addUserModal').modal('hide');
                     } else {
                         toastr.error(response.message);
@@ -68,14 +68,15 @@
                     data: 'id',
                     render: function(data, type, row) {
                         if (type === 'display') {
-                            var buttons = '<button type="button" class="btn btn-sm btn-warning btn-formsview mr-1 text-light" data-id="' + row.id + '" data-toggle="tooltip" data-placement="top" title="View Forms"><i class="fas fa-file-pdf"></i></button>&nbsp;';
+                            var buttons = '<button type="button" class="btn btn-sm btn-warning btn-formsview mr-1" data-id="' + row.id + '" data-toggle="tooltip" data-placement="top" title="View Forms"><i class="fas fa-file-pdf"></i></button>&nbsp;';
                             buttons += '<button type="button" class="btn btn-sm btn-info btn-docsview mr-1" data-id="' + row.id + '" data-toggle="tooltip" data-placement="top" title="View Clearances & Documents"><i class="ti ti-file-type-doc"></i></button>&nbsp;';
-                            var dropdown = '<div class="d-inline-block">' +
-                                '<a class="btn btn-success btn-sm dropdown-toggle text-light dropdown-icon" data-bs-toggle="dropdown"></a>' +
+                            var dropdown = '<div class="d-inline-block" data-toggle="tooltip" data-placement="top" title="More Options">' +
+                                '<button type="button" class="btn btn-success btn-sm btn-light" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>' +
                                 '<div class="dropdown-menu">' +
-                                '<a href="#" class="dropdown-item btn-useredit" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-email="' + row.email + '" data-campus="' + row.campus + '" data-dept="' + row.dept + '" data-role="' + row.role + '"><i class="fas fa-pen"></i> Edit</a>' +
-                                '<a href="#" class="dropdown-item btn-ustatusedit" data-id="' + row.id + '" data-ustatus="' + row.ustatus + '"><i class="fas fa-toggle-on"></i> Status</a>' +
-                                '<button type="button" value="' + data + '" class="dropdown-item user-delete"><i class="fas fa-trash"></i> Delete</button>' +
+                                '<a href="#" class="dropdown-item btn-appedit" data-toggle="tooltip" data-placement="top" title="Edit Applicant Info" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-brgy="' + row.brgy + '" data-tin_no="' + row.tin_no + '" data-mtof_make="' + row.mtof_make + '" data-mtof_color="' + row.mtof_color + '" data-mtof_cc="' + row.mtof_cc + '" data-motor_no="' + row.motor_no + '" data-chassis_no="' + row.chassis_no + '" data-plate_no="' + row.plate_no + '" data-body_no="' + row.body_no + '" data-route_no="' + row.route_no + '" data-color_code="' + row.color_code + '" data-cr_no="' + row.cr_no + '" data-or_no="' + row.or_no + '" data-or_date="' + row.or_date + '" data-date_acq="' + row.date_acq + '" data-valid="' + row.valid + '" data-drivers_name="' + row.drivers_name + '" data-driver_license="' + row.driver_license + '" data-mtof_id="' + row.mtof_id + '" data-p_name="' + row.p_name + '" data-status="' + row.status + '" data-status1="' + row.status1 + '" data-date_issued="' + row.date_issued + '" data-date_expired="' + row.date_expired + '"><i class="fas fa-pen"></i> Edit Info</a>' +
+                                '<a href="#" class="dropdown-item btn-dateedit" data-toggle="tooltip" data-placement="top" title="Date Approved/Expiry" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-email="' + row.email + '" data-campus="' + row.campus + '" data-dept="' + row.dept + '" data-role="' + row.role + '"><i class="fas fa-calendar"></i> Date</a>' +
+                                '<a href="#" class="dropdown-item btn-ustatusedit" data-toggle="tooltip" data-placement="top" title="Applicant Status" data-id="' + row.id + '" data-ustatus="' + row.ustatus + '"><i class="fas fa-toggle-on"></i> Status</a>' +
+                                '<button type="button" data-toggle="tooltip" data-placement="top" title="Delete Applicant Info" value="' + data + '" class="dropdown-item user-delete"><i class="fas fa-trash"></i> Delete</button>' +
                                 '</div></div>';
                             return buttons + dropdown;
                         } else {
@@ -93,7 +94,7 @@
             $('[data-toggle="tooltip"]').tooltip();
         });
 
-        $(document).on('userAdded', function() {
+        $(document).on('applicantAdded', function() {
             dataTable.ajax.reload();
         });
 
@@ -184,5 +185,95 @@
 
         // Calls GET /applicant/get-docs/{id}
         docTable.ajax.url(applicantDocSelectRoute + '/' + selectedAppId).load();
+    });
+
+    // 7. Open Applicant Information Modal 
+    $(document).on('click', '.btn-appedit', function() {
+        var id = $(this).data('id');
+        var fName = $(this).data('fname');
+        var mName = $(this).data('mname');
+        var lName = $(this).data('lname');
+        var extName = $(this).data('ext');
+        var brgyName = $(this).data('brgy');
+        var tinName = $(this).data('tin_no');
+        
+        var mtofmakeName = $(this).data('mtof_make');
+        var mtofcolorName = $(this).data('mtof_color');
+        var mtofccName = $(this).data('mtof_cc');
+        var motorNo = $(this).data('motor_no');
+        var chassisNo = $(this).data('chassis_no');
+        var plateNo = $(this).data('plate_no');
+        var crNo = $(this).data('cr_no');
+        var dateAcq = $(this).data('date_acq');
+
+        var driversName = $(this).data('drivers_name');
+        var driverLicense = $(this).data('driver_license');
+        var validDate = $(this).data('valid');
+
+        var bodyNo = $(this).data('body_no');
+        var routeNo = $(this).data('route_no');
+        var colorCode = $(this).data('color_code');
+        var orDate = $(this).data('or_date');
+        var orNo = $(this).data('or_no');
+
+        // Section 1: Personal Information
+        $('#editappID').val(id);
+        $('#editAppfname').val(fName);
+        $('#editAppmname').val(mName);
+        $('#editApplname').val(lName);
+        $('#editAppext').val(extName);
+        $('#editAppbgry').val(brgyName);
+        $('#editApptinid').val(tinName);
+
+        // Section 2: Vehicle Information
+        $('#editAppmtofmake').val(mtofmakeName);
+        $('#editAppmtofcolor').val(mtofcolorName);
+        $('#editAppmtofcc').val(mtofccName);
+        $('#editAppmotorno').val(motorNo);
+        $('#editAppchassisno').val(chassisNo);
+        $('#editAppplateno').val(plateNo);
+        $('#editAppcrno').val(crNo);
+        $('#editAppdateacq').val(dateAcq);
+
+        // Section 3: Driver Information
+        $('#editAppdriversname').val(driversName);
+        $('#editAppdriverlicense').val(driverLicense);
+        $('#editAppvalid').val(validDate);
+
+        // Section 4: Franchise & Registration
+        $('#editAppbodyno').val(bodyNo);
+        $('#editApprouteno').val(routeNo);
+        $('#editAppcolorcode').val(colorCode);
+        $('#editAppordate').val(orDate);
+        $('#editApporno').val(orNo);
+
+        $('#editApplicantModal').modal('show');
+    });
+
+    $('#editDocumentForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: documentUpdateRoute,
+            type: "POST",
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if(response.success) {
+                    toastr.success(response.message);
+                    $('#editApplicant').modal('hide');
+                    $(document).trigger('applicantAdded');
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error, message) {
+                var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                toastr.error(errorMessage);
+            }
+        });
     });
 </script>

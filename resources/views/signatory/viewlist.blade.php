@@ -134,7 +134,9 @@
                             <label for="editPosition">Position: <span class="text-danger">*</span></label>
                             <select class="form-control form-control-sm" id="editPosition" name="sigposition">
                                 <option disabled selected> ---Select---</option>
-                                <option value="Secretary to the Sangguniang Bayan">Secretary to the Sangguniang Bayan</option>
+                                @foreach ($pos as $data)
+                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

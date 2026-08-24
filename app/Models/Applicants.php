@@ -13,6 +13,7 @@ class Applicants extends Model
         'fname',
         'mname',
         'lname',
+        'ext',
         'brgy',
         'tin_no',
 
@@ -52,10 +53,10 @@ class Applicants extends Model
     ];
 
     protected $casts = [
-        'or_date'       => 'date',
-        'date_acq'      => 'date',
-        'valid'         => 'date',
+        //'or_date'       => 'date',
+        //'date_acq'      => 'date',
+        //'valid'         => 'date',
         'date_issued'   => 'date',
-        'date_expired'  => 'date',
+        //'date_expired'  => 'date',
     ];
 }

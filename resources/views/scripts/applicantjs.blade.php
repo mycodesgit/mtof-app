@@ -250,12 +250,12 @@
         $('#editApplicantModal').modal('show');
     });
 
-    $('#editDocumentForm').submit(function(event) {
+    $('#editApplicant').submit(function(event) {
         event.preventDefault();
         var formData = $(this).serialize();
 
         $.ajax({
-            url: documentUpdateRoute,
+            url: applicantUpdateRoute,
             type: "POST",
             data: formData,
             headers: {
@@ -264,7 +264,7 @@
             success: function(response) {
                 if(response.success) {
                     toastr.success(response.message);
-                    $('#editApplicant').modal('hide');
+                    $('#editApplicantModal').modal('hide');
                     $(document).trigger('applicantAdded');
                 } else {
                     toastr.error(response.message);

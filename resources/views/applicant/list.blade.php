@@ -214,7 +214,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 
-                <form action="#" method="post" id="editApplicant"> 
+                <form method="POST" id="editApplicant"> 
                     @csrf
                     <div class="modal-body">
                         
@@ -228,15 +228,15 @@
                                 <div class="row g-3">
                                     <div class="col-md-3">
                                         <label class="form-label">First Name <span class="text-danger">*</span></label>
-                                        <input type="text" name="fname" placeholder="First Name" id="editAppfname" class="form-control form-control-sm text-capitalize" required>
+                                        <input type="text" name="fname" placeholder="First Name" id="editAppfname" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm text-capitalize" required>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-label">Middle Name</label>
-                                        <input type="text" name="mname" placeholder="Middle Name" id="editAppmname" class="form-control form-control-sm text-capitalize">
+                                        <input type="text" name="mname" placeholder="Middle Name" id="editAppmname" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm text-capitalize">
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">Last Name <span class="text-danger">*</span></label>
-                                        <input type="text" name="lname" placeholder="Last Name" id="editApplname" class="form-control form-control-sm text-capitalize" required>
+                                        <input type="text" name="lname" placeholder="Last Name" id="editApplname" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm text-capitalize" required>
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-label">Ext.</label>
@@ -250,11 +250,11 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Barangay <span class="text-danger">*</span></label>
-                                        <input type="text" name="brgy" placeholder="Enter Barangay" id="editAppbgry" class="form-control form-control-sm" required>
+                                        <input type="text" name="brgy" placeholder="Enter Barangay" id="editAppbgry" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">TIN No. <span class="text-danger">*</span></label>
-                                        <input type="text" name="tin_no" placeholder="Enter TIN No." id="editApptinid" class="form-control form-control-sm" required>
+                                        <input type="text" name="tin_no" placeholder="Enter TIN No." id="editApptinid" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                 </div>
                             </div>
@@ -269,39 +269,39 @@
                                 <div class="row g-3">
                                     <div class="col-md-4">
                                         <label class="form-label">Make <span class="text-danger">*</span></label>
-                                        <input type="text" name="mtof_make" placeholder="e.g. Honda" id="editAppmtofmake" class="form-control form-control-sm" required>
+                                        <input type="text" name="mtof_make" placeholder="e.g. Honda" id="editAppmtofmake" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">Color <span class="text-danger">*</span></label>
-                                        <input type="text" name="mtof_color" placeholder="Enter Color" id="editAppmtofcolor" class="form-control form-control-sm" required>
+                                        <input type="text" name="mtof_color" placeholder="Enter Color" id="editAppmtofcolor" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">Displacement (CC) <span class="text-danger">*</span></label>
-                                        <input type="text" name="mtof_cc" placeholder="e.g. 125cc" id="editAppmtofcc" class="form-control form-control-sm" required>
+                                        <input type="text" name="mtof_cc" placeholder="e.g. 125cc" id="editAppmtofcc" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Engine No. <span class="text-danger">*</span></label>
-                                        <input type="text" name="motor_no" placeholder="Enter Engine No." id="editAppmotorno" class="form-control form-control-sm" required>
+                                        <input type="text" name="motor_no" placeholder="Enter Engine No." id="editAppmotorno" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Chassis No. <span class="text-danger">*</span></label>
-                                        <input type="text" name="chassis_no" placeholder="Enter Chassis No." id="editAppchassisno" class="form-control form-control-sm" required>
+                                        <input type="text" name="chassis_no" placeholder="Enter Chassis No." id="editAppchassisno" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">Plate No. <span class="text-danger">*</span></label>
-                                        <input type="text" name="plate_no" placeholder="Enter Plate No." id="editAppplateno" class="form-control form-control-sm" required>
+                                        <input type="text" name="plate_no" placeholder="Enter Plate No." id="editAppplateno" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">CR No. <span class="text-danger">*</span></label>
-                                        <input type="text" name="cr_no" placeholder="Enter CR No." id="editAppcrno" class="form-control form-control-sm" required>
+                                        <input type="text" name="cr_no" placeholder="Enter CR No." id="editAppcrno" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">Date Acquired <span class="text-danger">*</span></label>
-                                        <input type="date" name="date_acq" id="editAppdateacq" class="form-control form-control-sm" required>
+                                        <input type="date" name="date_acq" id="editAppdateacq" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="form-label">OR No. <span class="text-danger">*</span></label>
-                                        <input type="text" name="or_no" placeholder="Enter OR No." id="editApporno" class="form-control form-control-sm" required>
+                                        <input type="text" name="or_no" placeholder="Enter OR No." id="editApporno" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                 </div>
                             </div>
@@ -316,15 +316,15 @@
                                 <div class="row g-3">
                                     <div class="col-md-4">
                                         <label class="form-label">Driver's Full Name <span class="text-danger">*</span></label>
-                                        <input type="text" name="drivers_name" placeholder="Enter Full Name" id="editAppdriversname" class="form-control form-control-sm" required>
+                                        <input type="text" name="drivers_name" placeholder="Enter Full Name" id="editAppdriversname" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">Driver's License No. <span class="text-danger">*</span></label>
-                                        <input type="text" name="driver_license" placeholder="Enter License No." id="editAppdriverlicense" class="form-control form-control-sm" required>
+                                        <input type="text" name="driver_license" placeholder="Enter License No." id="editAppdriverlicense" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">DL Expiry Date <span class="text-danger">*</span></label>
-                                        <input type="date" name="valid" id="editAppvalid" class="form-control form-control-sm" required>
+                                        <input type="date" name="valid" id="editAppvalid" class="form-control form-control-sm" oninput="this.value = this.value.toUpperCase()" required>
                                     </div>
                                 </div>
                             </div>
@@ -339,19 +339,19 @@
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <label class="form-label">Body No. <span class="text-danger">*</span></label>
-                                        <input type="text" name="body_no" placeholder="Enter Body No." id="editAppbodyno" class="form-control form-control-sm" required>
+                                        <input type="text" name="body_no" placeholder="Enter Body No." id="editAppbodyno" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Route No. <span class="text-danger">*</span></label>
-                                        <input type="text" name="route_no" placeholder="Enter Route No." id="editApprouteno" class="form-control form-control-sm" required>
+                                        <input type="text" name="route_no" placeholder="Enter Route No." id="editApprouteno" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Color Code <span class="text-danger">*</span></label>
-                                        <input type="text" name="color_code" placeholder="Enter Color Code" id="editAppcolorcode" class="form-control form-control-sm" required>
+                                        <input type="text" name="color_code" placeholder="Enter Color Code" id="editAppcolorcode" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">OR Date <span class="text-danger">*</span></label>
-                                        <input type="date" name="or_date" id="editAppordate" class="form-control form-control-sm" required>
+                                        <input type="date" name="or_date" id="editAppordate" oninput="this.value = this.value.toUpperCase()" class="form-control form-control-sm" required>
                                     </div>
                                 </div>
                             </div>
@@ -424,5 +424,7 @@
         var applicantViewRoute = "{{ route('applicant.view', '') }}";
         var applicantDocSelectRoute = "{{ route('applicant.docs.get', '') }}";
         var applicantDocSaveRoute = "{{ route('applicant.docs.store') }}";
+        var applicantUpdateRoute = "{{ route('applicant.update', ['id' => ':id']) }}";
+        var applicantDeleteRoute = "{{ route('applicant.destroy', ['id' => ':id']) }}";
     </script>
 @endsection

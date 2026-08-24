@@ -18,6 +18,7 @@
                         toastr.success(response.message);
                         console.log(response);
                         $(document).trigger('docsAdded');
+                        $('#addDocumentCardForm')[0].reset();
                     } else {
                         toastr.error(response.message);
                         console.log(response);

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('fname');
             $table->string('mname')->nullable();
             $table->string('lname');
+            $table->string('ext')->nullable();
             $table->string('brgy')->nullable();
             $table->string('tin_no')->nullable();
 

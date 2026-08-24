@@ -47,6 +47,8 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::get('/list/view/modal/file/aou2/{id}', [ApplicantController::class,'viewPDFaou2'])->name('applicant.viewPDFaou2');
         Route::get('/applicant/documents/{id}', [ApplicantController::class, 'getApplicantDocs'])->name('applicant.docs.get');
         Route::post('/applicant/documents/store', [ApplicantController::class, 'storeApplicantDocs'])->name('applicant.docs.store');
+        Route::post('/applicant/documents/update', [ApplicantController::class, 'update'])->name('applicant.update');
+        Route::post('/applicant/documents/delte/{id}', [ApplicantController::class, 'destory'])->name('applicant.destroy');
     });
 
     Route::prefix('/docs')->group(function () {

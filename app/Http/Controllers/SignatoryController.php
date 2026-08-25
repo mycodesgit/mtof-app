@@ -37,7 +37,6 @@ class SignatoryController extends Controller
         if ($request->isMethod('post')) {
             $validated = $request->validate([
                 'sigfname'  => 'required|string|max:255',
-                'sigmname'  => 'required|string|max:255',
                 'siglname'  => 'required|string|max:255',
                 'sigposition'  => 'required|string|max:255',
             ]);
@@ -79,7 +78,6 @@ class SignatoryController extends Controller
         $validated = $request->validate([
             'id'          => 'required|exists:signatories,id',
             'sigfname'    => 'required|string|max:255',
-            'sigmname'    => 'required|string|max:255',
             'siglname'    => 'required|string|max:255',
             'formassign.*'=> 'string',
         ]);

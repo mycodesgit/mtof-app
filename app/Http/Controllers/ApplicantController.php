@@ -62,14 +62,22 @@ class ApplicantController extends Controller
             ->where('status', '1')
             ->get()
             ->keyBy(function ($signatory) {
-                // If signatory_role is an array/JSON, pick the role corresponding to 'f1'
-                $forms = is_array($signatory->formassign) ? $signatory->formassign : json_decode($signatory->formassign, true) ?? [];
-                $roles = is_array($signatory->signatory_role) ? $signatory->signatory_role : json_decode($signatory->signatory_role, true) ?? [];
+                $roles = is_array($signatory->signatory_role) 
+                    ? $signatory->signatory_role 
+                    : (json_decode($signatory->signatory_role, true) ?? []);
 
-                $index = array_search('f1', $forms);
-                
-                // Return the role string for f1, or default to the first role/id if not found
-                return ($index !== false && isset($roles[$index])) ? $roles[$index] : $signatory->id;
+                // 1. Define standard form index mapping (f1=0, f2=1, f3=2, f4=3, f5=4)
+                $formMap = ['f1' => 0, 'f2' => 1, 'f3' => 2, 'f4' => 3, 'f5' => 4];
+                $targetSlotIndex = $formMap['f1'] ?? null;
+
+                // 2. Check directly at slot index 2 for 'f3'
+                if ($targetSlotIndex !== null && !empty($roles[$targetSlotIndex])) {
+                    return $roles[$targetSlotIndex];
+                }
+
+                // 3. Fallback: search for first non-null role if slot matching fails
+                $validRoles = array_values(array_filter($roles, fn($r) => !is_null($r) && $r !== ''));
+                return $validRoles[0] ?? $signatory->id;
             });
 
         $data = [
@@ -86,8 +94,31 @@ class ApplicantController extends Controller
     {
         $applicant = Applicants::findOrFail($id);
 
+        $signatories = Signatories::whereJsonContains('formassign', 'f2')
+            ->where('status', '1')
+            ->get()
+            ->keyBy(function ($signatory) {
+                $roles = is_array($signatory->signatory_role) 
+                    ? $signatory->signatory_role 
+                    : (json_decode($signatory->signatory_role, true) ?? []);
+
+                // 1. Define standard form index mapping (f1=0, f2=1, f3=2, f4=3, f5=4)
+                $formMap = ['f1' => 0, 'f2' => 1, 'f3' => 2, 'f4' => 3, 'f5' => 4];
+                $targetSlotIndex = $formMap['f2'] ?? null;
+
+                // 2. Check directly at slot index 2 for 'f3'
+                if ($targetSlotIndex !== null && !empty($roles[$targetSlotIndex])) {
+                    return $roles[$targetSlotIndex];
+                }
+
+                // 3. Fallback: search for first non-null role if slot matching fails
+                $validRoles = array_values(array_filter($roles, fn($r) => !is_null($r) && $r !== ''));
+                return $validRoles[0] ?? $signatory->id;
+            });
+
         $data = [
             'applicant' => $applicant,
+            'signatories' => $signatories,
         ];
 
         $pdf = PDF::loadView('applicant.pdf.form2',  $data)->setPaper('Legal', 'portrait');
@@ -98,8 +129,31 @@ class ApplicantController extends Controller
     {
         $applicant = Applicants::findOrFail($id);
 
+        $signatories = Signatories::whereJsonContains('formassign', 'f3')
+            ->where('status', '1')
+            ->get()
+            ->keyBy(function ($signatory) {
+                $roles = is_array($signatory->signatory_role) 
+                    ? $signatory->signatory_role 
+                    : (json_decode($signatory->signatory_role, true) ?? []);
+
+                // 1. Define standard form index mapping (f1=0, f2=1, f3=2, f4=3, f5=4)
+                $formMap = ['f1' => 0, 'f2' => 1, 'f3' => 2, 'f4' => 3, 'f5' => 4];
+                $targetSlotIndex = $formMap['f3'] ?? null;
+
+                // 2. Check directly at slot index 2 for 'f3'
+                if ($targetSlotIndex !== null && !empty($roles[$targetSlotIndex])) {
+                    return $roles[$targetSlotIndex];
+                }
+
+                // 3. Fallback: search for first non-null role if slot matching fails
+                $validRoles = array_values(array_filter($roles, fn($r) => !is_null($r) && $r !== ''));
+                return $validRoles[0] ?? $signatory->id;
+            });
+
         $data = [
             'applicant' => $applicant,
+            'signatories' => $signatories,
         ];
 
         $pdf = PDF::loadView('applicant.pdf.form3',  $data)->setPaper('Legal', 'portrait');

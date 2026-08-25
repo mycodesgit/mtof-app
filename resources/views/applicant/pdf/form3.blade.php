@@ -222,14 +222,22 @@
             <td style="text-align: left;">
                 <div class="text-italic">Recommending Approval:</div>
                 <br><br>
-                <div class="text-bold">SANNY D SABIO</div>
-                <div>Chairperson, Committee on Transportation</div>
+                @if(isset($signatories['Recommending Approval']))
+                    <div class="text-bold">{{ strtoupper(trim("{$signatories['Recommending Approval']->sigfname} {$signatories['Recommending Approval']->sigmname} {$signatories['Recommending Approval']->siglname} {$signatories['Recommending Approval']->sigext}")) }}</div>
+                    <div>{{ $signatories['Recommending Approval']->position_name ?? 'Chairperson, Committee on Transportation' }}</div>
+                @else
+                    <div>Chairperson, Committee on Transportation</div>
+                @endif
             </td>
             <td style="text-align: right;">
                 <div class="text-italic" style="padding-right: 50px;">Approved:</div>
                 <br><br>
-                <div class="text-bold">LORIEMAE JOY LAMBOT-GARGAR, MPA</div>
-                <div>Vice Mayor/Presiding Officer</div>
+                @if(isset($signatories['Approved']))
+                    <div class="text-bold">{{ strtoupper(trim("{$signatories['Approved']->sigfname} {$signatories['Approved']->sigmname} {$signatories['Approved']->siglname} {$signatories['Approved']->sigext}")) }}</div>
+                    <div>{{ $signatories['Approved']->position_name ?? 'Vice Mayor/Presiding Officer' }}</div>
+                @else
+                    <div>Vice Mayor/Presiding Officer</div>
+                @endif
             </td>
         </tr>
     </table>
@@ -238,8 +246,12 @@
     <div class="attested-section">
         <div class="text-italic">Attested:</div>
         <br><br>
-        <div class="text-bold">BENJIE M. OROT</div>
-        <div>Secretary to the Sangguniang Bayan</div>
+        @if(isset($signatories['Attested']))
+            <div class="text-bold">{{ strtoupper(trim("{$signatories['Attested']->sigfname} {$signatories['Attested']->sigmname} {$signatories['Attested']->siglname} {$signatories['Attested']->sigext}")) }}</div>
+            <div>{{ $signatories['Attested']->position_name ?? 'Secretary to the Sangguniang Bayan' }}</div>
+        @else
+            <div>Secretary to the Sangguniang Bayan</div>
+        @endif
     </div>
 
 </body>

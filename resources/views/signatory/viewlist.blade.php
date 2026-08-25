@@ -220,7 +220,7 @@
                                                     <td>
                                                         <select name="signatory_role[]" id="editSignatoryRolef3" class="form-control form-control-sm">
                                                             <option value=""> --Select-- </option>
-                                                            <option value="Recommending Approval:">Recommending Approval:</option>
+                                                            <option value="Recommending Approval:">Recommending Approval</option>
                                                             <option value="Approved">Approved</option>
                                                             <option value="Attested">Attested</option>
                                                         </select>

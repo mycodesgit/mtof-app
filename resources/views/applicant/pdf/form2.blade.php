@@ -290,15 +290,23 @@
         <div class="sig-block">
             <div class="text-italic text-bold">Inspected:</div>
             <br>
-            <div class="text-bold">PEMS JOEY B. SANTIAGO | PCpl BRIAN L. NOMA</div>
-            <div>PNP Traffic Division</div>
+            @if(isset($signatories['Inspected']))
+                <div class="text-bold">{{ strtoupper(trim("{$signatories['Inspected']->sigfname} {$signatories['Inspected']->sigmname} {$signatories['Inspected']->siglname} {$signatories['Inspected']->sigext}")) }}</div>
+                <div>{{ $signatories['Inspected']->position_name ?? 'PNP Traffic Division' }}</div>
+            @else
+                <div>PNP Traffic Division</div>
+            @endif
         </div>
 
         <div class="sig-block">
             <div class="text-italic text-bold">Endorsed:</div>
             <br>
-            <div class="text-bold">SANNY D SABIO</div>
-            <div>Chairperson, SB Committee on Transportation</div>
+            @if(isset($signatories['Endorsed']))
+                <div class="text-bold">{{ strtoupper(trim("{$signatories['Endorsed']->sigfname} {$signatories['Endorsed']->sigmname} {$signatories['Endorsed']->siglname} {$signatories['Endorsed']->sigext}")) }}</div>
+                <div>{{ $signatories['Endorsed']->position_name ?? 'Chairperson, SB Committee on Transportation' }}</div>
+            @else
+                <div>Chairperson, SB Committee on Transportation</div>
+            @endif
         </div>
     </div>
 

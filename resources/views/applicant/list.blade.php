@@ -436,18 +436,18 @@
                     <input type="hidden" name="id" id="editAppStatusId">
 
                     <div class="mb-4">
-                        <label for="editAppStatus" class="form-label fw-medium d-block">Application Status <span class="text-danger">*</span></label>
+                        <label for="editAppStatus1" class="form-label fw-medium d-block">Application Status <span class="text-danger">*</span></label>
                         <div class="form-check form-switch d-flex align-items-center gap-2 ps-0">
-                            <input class="form-check-input doc-checkbox doc-switch-success m-0" type="checkbox" name="status" id="editAppStatus" value="Released">
+                            <input class="form-check-input doc-checkbox doc-switch-success m-0" type="checkbox" name="status1" id="editAppStatus1" value="Released">
                             <label class="form-check-label fw-medium cursor-pointer mb-0" for="editAppStatus">
-                                Released
+                                <span id="statusLabelText">Not Released</span>
                             </label>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-medium">Other Application Document Status <span class="text-danger">*</span></label>
-                        <select id="editAppStatus1" name="status1" class="form-control" required>
+                        <select id="editAppStatus" name="status" class="form-control" required>
                             <option value="" selected disabled>-- Select --</option>
                             <option value="Expired OR/CR">Expired OR/CR</option>
                             <option value="Private">Private</option>
@@ -476,6 +476,7 @@
         var applicantDocSelectRoute = "{{ route('applicant.docs.get', '') }}";
         var applicantDocSaveRoute = "{{ route('applicant.docs.store') }}";
         var applicantUpdateRoute = "{{ route('applicant.update', ['id' => ':id']) }}";
+        var applicantUpdateAppStatusRoute = "{{ route('applicant.updateAppStatus', ['id' => ':id']) }}";
         var applicantDeleteRoute = "{{ route('applicant.destroy', ['id' => ':id']) }}";
     </script>
 @endsection

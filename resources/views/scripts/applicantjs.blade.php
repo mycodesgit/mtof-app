@@ -277,16 +277,64 @@
     });
 
     // 7. Open Applicant Document Status Modal 
-    $(document).on('click', '.btn-ustatusedit', function() {
-        var id = $(this).data('id');
-        var status = $(this).data('status');
-        var statusOne = $(this).data('status1');
+    $(document).on('click', '.btn-ustatusedit', function(e) {
+        e.preventDefault();
 
+        // 1. Read data attributes directly
+        var id = $(this).attr('data-id') || $(this).data('id');
+        var status = $(this).attr('data-status') || $(this).data('status');       // Dropdown status
+        var statusOne = $(this).attr('data-status1') || $(this).data('status1');   // Switch status
+
+        // 2. Set the hidden input ID
         $('#editAppStatusId').val(id);
-        $('#editAppStatus').prop('checked', statusOne === 'Released');
-        $('#editAppStatus1').val(status);
 
+        // 3. Set Document Status Dropdown (#editAppStatus)
+        $('#editAppStatus').val(status).trigger('change');
+
+        // 4. Determine if statusOne is 'Released'
+        var isReleased = (statusOne === 'Released' || statusOne === '1' || statusOne === true);
+
+        // 5. Check/Uncheck the Switch (#editAppStatus1)
+        $('#editAppStatus1').prop('checked', isReleased);
+
+        // 6. Update the Front-End Label Text
+        $('#statusLabelText').text(isReleased ? 'Released' : 'Not Released');
+
+        // 7. Open the Modal
         $('#viewAppStatusModal').modal('show');
+    });
+
+    // Listener: Dynamically update text when the user toggles #editAppStatus1 manually
+    $(document).on('change', '#editAppStatus1', function() {
+        var isChecked = $(this).is(':checked');
+        $('#statusLabelText').text(isChecked ? 'Released' : 'Not Released');
+    });
+
+    $('#editAppStatusForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: applicantUpdateAppStatusRoute,
+            type: "POST",
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if(response.success) {
+                    toastr.success(response.message);
+                    $('#viewAppStatusModal').modal('hide');
+                    $(document).trigger('applicantAdded');
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error, message) {
+                var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                toastr.error(errorMessage);
+            }
+        });
     });
 
     $(document).on('click', '.applcnt-delete', function(e) {

@@ -263,6 +263,28 @@ class ApplicantController extends Controller
         }
     }
 
+    public function updateAppStatus(Request $request) 
+    {
+        $request->validate([
+            'id' => 'required',
+            'status'  => 'required',
+        ]);
+
+        try {
+            $doc = Applicants::findOrFail($request->input('id'));
+            $appStatus = $request->has('status1') && $request->input('status1') === 'Released' 
+                ? 'Released' 
+                : 'Not Released';
+            $doc->update([
+                'status1'   => $appStatus,
+                'status'    => $request->input('status'),
+        ]);
+            return response()->json(['success' => true, 'message' => 'Updated Successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => 'Failed to update Applicant Status!']);
+        }
+    }
+
     public function destroy($id) 
     {
         $applcnt = Applicants::find($id);

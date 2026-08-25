@@ -48,6 +48,7 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::get('/applicant/documents/{id}', [ApplicantController::class, 'getApplicantDocs'])->name('applicant.docs.get');
         Route::post('/applicant/documents/store', [ApplicantController::class, 'storeApplicantDocs'])->name('applicant.docs.store');
         Route::post('/applicant/documents/update', [ApplicantController::class, 'update'])->name('applicant.update');
+        Route::post('/applicant/documents/updateappstatus', [ApplicantController::class, 'updateAppStatus'])->name('applicant.updateAppStatus');
         Route::post('/applicant/documents/delete/{id}', [ApplicantController::class, 'destroy'])->name('applicant.destroy');
     });
 

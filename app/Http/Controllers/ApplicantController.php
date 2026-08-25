@@ -26,7 +26,7 @@ class ApplicantController extends Controller
 
     public function show(Request $request)
     {  
-        $data = Applicants::all();
+        $data = Applicants::where('delstat', 'LIKE', 'Not Deleted')->get();
         
         return response()->json(['data' => $data]);
     }
@@ -289,7 +289,7 @@ class ApplicantController extends Controller
     {
         $applcnt = Applicants::find($id);
         if ($applcnt) {
-            $applcnt->delsat = 'Deleted';
+            $applcnt->delstat = 'Deleted';
             $applcnt->save();
             return response()->json(['success'=> true, 'message'=>'Applicant deleted successfully']);
         }

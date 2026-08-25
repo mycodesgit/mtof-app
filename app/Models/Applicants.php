@@ -46,6 +46,7 @@ class Applicants extends Model
         // Status
         'status',
         'status1',
+        'delsat',
 
         // Dates
         'date_issued',

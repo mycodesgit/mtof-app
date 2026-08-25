@@ -62,8 +62,8 @@
                         return (firstname + ' ' + middleInitial + ' ' + lastNameWithExt).trim();
                     }
                 },
-                {data: 'status'},
                 {data: 'status1'},
+                {data: 'status'},
                 {
                     data: 'id',
                     render: function(data, type, row) {
@@ -73,10 +73,9 @@
                             var dropdown = '<div class="d-inline-block" data-toggle="tooltip" data-placement="top" title="More Options">' +
                                 '<button type="button" class="btn btn-success btn-sm btn-light" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></button>' +
                                 '<div class="dropdown-menu">' +
-                                '<a href="#" class="dropdown-item btn-appedit" data-toggle="tooltip" data-placement="top" title="Edit Applicant Info" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-brgy="' + row.brgy + '" data-tin_no="' + row.tin_no + '" data-mtof_make="' + row.mtof_make + '" data-mtof_color="' + row.mtof_color + '" data-mtof_cc="' + row.mtof_cc + '" data-motor_no="' + row.motor_no + '" data-chassis_no="' + row.chassis_no + '" data-plate_no="' + row.plate_no + '" data-body_no="' + row.body_no + '" data-route_no="' + row.route_no + '" data-color_code="' + row.color_code + '" data-cr_no="' + row.cr_no + '" data-or_no="' + row.or_no + '" data-or_date="' + row.or_date + '" data-date_acq="' + row.date_acq + '" data-valid="' + row.valid + '" data-drivers_name="' + row.drivers_name + '" data-driver_license="' + row.driver_license + '" data-mtof_id="' + row.mtof_id + '" data-p_name="' + row.p_name + '" data-status="' + row.status + '" data-status1="' + row.status1 + '" data-date_issued="' + row.date_issued + '" data-date_expired="' + row.date_expired + '"><i class="fas fa-pen"></i> Edit Info</a>' +
-                                '<a href="#" class="dropdown-item btn-dateedit" data-toggle="tooltip" data-placement="top" title="Date Approved/Expiry" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-ext="' + row.ext + '" data-email="' + row.email + '" data-campus="' + row.campus + '" data-dept="' + row.dept + '" data-role="' + row.role + '"><i class="fas fa-calendar"></i> Date</a>' +
-                                '<a href="#" class="dropdown-item btn-ustatusedit" data-toggle="tooltip" data-placement="top" title="Applicant Status" data-id="' + row.id + '" data-ustatus="' + row.ustatus + '"><i class="fas fa-toggle-on"></i> Status</a>' +
-                                '<button type="button" data-toggle="tooltip" data-placement="top" title="Delete Applicant Info" value="' + data + '" class="dropdown-item user-delete"><i class="fas fa-trash"></i> Delete</button>' +
+                                '<a href="#" class="dropdown-item btn-appedit" data-toggle="tooltip" data-placement="top" title="Edit Applicant Info" data-id="' + row.id + '" data-fname="' + row.fname + '" data-mname="' + row.mname + '" data-lname="' + row.lname + '" data-brgy="' + row.brgy + '" data-tin_no="' + row.tin_no + '" data-mtof_make="' + row.mtof_make + '" data-mtof_color="' + row.mtof_color + '" data-mtof_cc="' + row.mtof_cc + '" data-motor_no="' + row.motor_no + '" data-chassis_no="' + row.chassis_no + '" data-plate_no="' + row.plate_no + '" data-body_no="' + row.body_no + '" data-route_no="' + row.route_no + '" data-color_code="' + row.color_code + '" data-cr_no="' + row.cr_no + '" data-or_no="' + row.or_no + '" data-or_date="' + row.or_date + '" data-date_acq="' + row.date_acq + '" data-valid="' + row.valid + '" data-drivers_name="' + row.drivers_name + '" data-driver_license="' + row.driver_license + '" data-mtof_id="' + row.mtof_id + '" data-p_name="' + row.p_name + '" data-status="' + row.status + '" data-status1="' + row.status1 + '" data-date_issued="' + row.date_issued + '" data-date_expired="' + row.date_expired + '"><i class="fas fa-pen"></i> Edit Information</a>' +
+                                '<a href="#" class="dropdown-item btn-ustatusedit" data-toggle="tooltip" data-placement="top" title="Applicant Document Status" data-id="' + row.id + '" data-status="' + row.status + '" data-status1="' + row.status1 + '"><i class="fas fa-toggle-on"></i> Document Status</a>' +
+                                '<button type="button" data-toggle="tooltip" data-placement="top" title="Delete Applicant Info" value="' + data + '" class="dropdown-item applcnt-delete"><i class="fas fa-trash"></i> Delete</button>' +
                                 '</div></div>';
                             return buttons + dropdown;
                         } else {
@@ -275,5 +274,57 @@
                 toastr.error(errorMessage);
             }
         });
+    });
+
+    // 7. Open Applicant Document Status Modal 
+    $(document).on('click', '.btn-ustatusedit', function() {
+        var id = $(this).data('id');
+        var status = $(this).data('status');
+        var statusOne = $(this).data('status1');
+
+        $('#editAppStatusId').val(id);
+        $('#editAppStatus').prop('checked', statusOne === 'Released');
+        $('#editAppStatus1').val(status);
+
+        $('#viewAppStatusModal').modal('show');
+    });
+
+    $(document).on('click', '.applcnt-delete', function(e) {
+        var id = $(this).val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to recover this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: applicantDeleteRoute.replace(':id', id),
+                    success: function(response) {
+                        $("#tr-" + id).delay(1000).fadeOut();
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Successfully Deleted!',
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        if(response.success) {
+                            toastr.success(response.message);
+                            console.log(response);
+                        }
+                    }
+                });
+            }
+        })
     });
 </script>

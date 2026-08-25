@@ -49,6 +49,7 @@ return new class extends Migration
             
             $table->string('status')->nullable();
             $table->string('status1')->nullable();
+            $table->enum('delstat', ['Deleted', 'Not Deleted'])->default('Not Deleted');
 
             $table->date('date_issued')->nullable();
             $table->date('date_expired')->nullable();

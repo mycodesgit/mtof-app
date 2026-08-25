@@ -267,9 +267,9 @@ class ApplicantController extends Controller
     {
         $applcnt = Applicants::find($id);
         if ($applcnt) {
-            $applcnt->delstatus = 'Deleted';
+            $applcnt->delsat = 'Deleted';
             $applcnt->save();
-            return response()->json(['success'=> true, 'message'=>'Document updated to deleted successfully']);
+            return response()->json(['success'=> true, 'message'=>'Applicant deleted successfully']);
         }
         return response()->json(['error'=> true, 'message'=>'Item not found']);
     }

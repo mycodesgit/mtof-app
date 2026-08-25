@@ -418,6 +418,57 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="viewAppStatusModal" tabindex="-1" aria-labelledby="viewAppStatusModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-3">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <div>
+                    <h5 class="modal-title fw-semibold" id="viewAppStatusModalLabel">
+                        Update Applicant Status
+                    </h5>
+                    <p class="text-muted small mb-0">Modify the application and document status details below.</p>
+                    </div>
+                    <button type="button" class="btn-close align-self-start" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editAppStatusForm">
+                    <div class="modal-body p-4" id="modalAppStatusContent">
+                    <input type="hidden" name="id" id="editAppStatusId">
+
+                    <div class="mb-4">
+                        <label for="editAppStatus" class="form-label fw-medium d-block">Application Status <span class="text-danger">*</span></label>
+                        <div class="form-check form-switch d-flex align-items-center gap-2 ps-0">
+                            <input class="form-check-input doc-checkbox doc-switch-success m-0" type="checkbox" name="status" id="editAppStatus" value="Released">
+                            <label class="form-check-label fw-medium cursor-pointer mb-0" for="editAppStatus">
+                                Released
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-medium">Other Application Document Status <span class="text-danger">*</span></label>
+                        <select id="editAppStatus1" name="status1" class="form-control" required>
+                            <option value="" selected disabled>-- Select --</option>
+                            <option value="Expired OR/CR">Expired OR/CR</option>
+                            <option value="Private">Private</option>
+                            <option value="Both">Both</option>
+                            <option value="Validate">Validate</option>
+                            <option value="Revoked">Revoked</option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="modal-footer border-top-0 px-4 py-3">
+                        <button type="button" class="btn btn-outline-secondary px-4 rounded-2" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-success px-4 rounded-2 d-inline-flex align-items-center gap-1">
+                            <i class="ti ti-check fs-5"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     
     <script>
         var applicantReadRoute = "{{ route('applicant.show') }}";

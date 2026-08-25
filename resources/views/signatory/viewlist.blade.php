@@ -26,6 +26,8 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Position</th>
+                                            <th>Assign</th>
+                                            <th>Role</th>
                                             <th>Posted by</th>
                                             <th>Status</th>
                                             <th width="10%">Actions</th>

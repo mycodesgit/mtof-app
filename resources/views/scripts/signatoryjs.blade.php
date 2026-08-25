@@ -60,6 +60,45 @@
                 },
                 {data: 'position_name'},
                 {
+                    data: 'formassign',
+                    render: function(data, type, row) {
+                        if (!data) return '<span class="text-muted">None</span>';
+                        
+                        // Convert array to array if passed as string
+                        var forms = Array.isArray(data) ? data : (data.toString().split(','));
+                        
+                        // Format values as badges (e.g., f1 -> Form 1)
+                        var badges = forms.map(function(form) {
+                            var label = form.trim().toUpperCase().replace('F', 'Form ');
+                            return '<span class="badge bg-primary me-1">' + label + '</span>';
+                        });
+
+                        return badges.join(' ') || '<span class="text-muted">None</span>';
+                    }
+                },
+                {
+                    data: 'signatory_role',
+                    render: function(data, type, row) {
+                        if (!data) return '<span class="text-muted">None</span>';
+                        
+                        var roles = Array.isArray(data) ? data : (data.toString().split(','));
+                        
+                        // Filter out null or empty string entries
+                        var validRoles = roles.filter(function(role) {
+                            return role && role.toString().trim() !== '' && role !== 'null';
+                        });
+
+                        if (validRoles.length === 0) return '<span class="text-muted">None</span>';
+
+                        // Format roles into badges
+                        var badges = validRoles.map(function(role) {
+                            return '<span class="badge bg-info me-1">' + role.trim() + '</span>';
+                        });
+
+                        return badges.join(' ');
+                    }
+                },
+                {
                     data: 'users',
                     render: function(data, type, row) {
                         var firstname = data.fname;

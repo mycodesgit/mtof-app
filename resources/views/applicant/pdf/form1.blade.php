@@ -241,29 +241,58 @@
         <div>Signature of Applicant & Date</div>
     </div>
 
-    <!-- Sign-off Officials -->
     <table class="officials-table">
         <tr>
+            <!-- Processed -->
             <td>
                 <div class="text-bold">Processed:</div>
                 <br><br>
-                <div class="text-bold">ROSALIE G. ESTRADA</div>
-                <div>TRU Staff</div>
+                @if(isset($signatories['Processed']))
+                    <div class="text-bold">
+                        {{ strtoupper(trim("{$signatories['Processed']->sigfname} {$signatories['Processed']->sigmname} {$signatories['Processed']->siglname} {$signatories['Processed']->sigext}")) }}
+                    </div>
+                    {{-- <div>{{ $signatories['Processed']->position_name ?? 'TRU Staff' }}</div> --}}
+                    <div>TRU Staff</div>
+                @else
+                    <div class="text-bold">___________________</div>
+                    <div>TRU Staff</div>
+                @endif
             </td>
+
+            <!-- Verified -->
             <td>
                 <div class="text-bold">Verified:</div>
                 <br><br>
-                <div class="text-bold">MICHAEL V. SORIANO</div>
-                <div>TRU Staff</div>
+                @if(isset($signatories['Verified']))
+                    <div class="text-bold">
+                        {{ strtoupper(trim("{$signatories['Verified']->sigfname} {$signatories['Verified']->sigmname} {$signatories['Verified']->siglname} {$signatories['Verified']->sigext}")) }}
+                    </div>
+                    {{-- <div>{{ $signatories['Verified']->position_name ?? 'TRU Staff' }}</div> --}}
+                    <div>TRU Staff</div>
+                @else
+                    <div class="text-bold">___________________</div>
+                    <div>TRU Staff</div>
+                @endif
             </td>
+
+            <!-- Noted -->
             <td>
                 <div class="text-bold">Noted:</div>
                 <br><br>
-                <div class="text-bold">BENJIE M. OROT</div>
-                <div>TRU Head</div>
+                @if(isset($signatories['Noted']))
+                    <div class="text-bold">
+                        {{ strtoupper(trim("{$signatories['Noted']->sigfname} {$signatories['Noted']->sigmname} {$signatories['Noted']->siglname} {$signatories['Noted']->sigext}")) }}
+                    </div>
+                    {{-- <div>{{ $signatories['Noted']->position_name ?? 'TRU Head' }}</div> --}}
+                    <div>TRU Head</div>
+                @else
+                    <div class="text-bold">___________________</div>
+                    <div>TRU Head</div>
+                @endif
             </td>
         </tr>
     </table>
+    
 
 </body>
 </html>

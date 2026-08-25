@@ -16,6 +16,7 @@ use PDF;
 use App\Models\Applicants;
 use App\Models\Documents;
 use App\Models\ApplicantDocs;
+use App\Models\Signatories;
 
 class ApplicantController extends Controller
 {
@@ -57,9 +58,24 @@ class ApplicantController extends Controller
                 return $doc;
             });
 
+        $signatories = Signatories::whereJsonContains('formassign', 'f1')
+            ->where('status', '1')
+            ->get()
+            ->keyBy(function ($signatory) {
+                // If signatory_role is an array/JSON, pick the role corresponding to 'f1'
+                $forms = is_array($signatory->formassign) ? $signatory->formassign : json_decode($signatory->formassign, true) ?? [];
+                $roles = is_array($signatory->signatory_role) ? $signatory->signatory_role : json_decode($signatory->signatory_role, true) ?? [];
+
+                $index = array_search('f1', $forms);
+                
+                // Return the role string for f1, or default to the first role/id if not found
+                return ($index !== false && isset($roles[$index])) ? $roles[$index] : $signatory->id;
+            });
+
         $data = [
             'applicant' => $applicant,
             'documents' => $documents,
+            'signatories' => $signatories,
         ];
 
         $pdf = PDF::loadView('applicant.pdf.form1', $data)->setPaper('Legal', 'portrait');

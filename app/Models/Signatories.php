@@ -16,7 +16,14 @@ class Signatories extends Model
         'sigext',
         'sigposition',
         'postedBy',
-        'status'
+        'status',
+        'formassign',
+        'signatory_role'
+    ];
+
+    protected $casts = [
+        'formassign' => 'array',
+        'signatory_role' => 'array',
     ];
     
     protected $appends = ['position_name'];

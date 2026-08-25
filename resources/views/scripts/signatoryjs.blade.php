@@ -5,12 +5,12 @@
         "positionClass": "toast-bottom-left"
     };
     $(document).ready(function() {
-        $('#addUser').submit(function(event) {
+        $('#addSignatoryForm').submit(function(event) {
             event.preventDefault();
             var formData = $(this).serialize();
 
             $.ajax({
-                url: userCreateRoute,
+                url: signatoryStoreRoute,
                 type: "POST",
                 data: formData,
                 success: function(response) {
@@ -76,11 +76,23 @@
                 {
                     data: 'id',
                     render: function(data, type, row) {
+                        // Converts ["f1", "f2"] array into a simple string "f1,f2"
+                        var formStr = Array.isArray(row.formassign) ? row.formassign.join(',') : (row.formassign || '');
+                        var signatoryroleStr = Array.isArray(row.signatory_role) ? row.signatory_role.join(',') : (row.signatory_role || '');
+
                         if (type === 'display') {
                             var dropdown = '<div class="d-inline-block">' +
                                 '<a class="btn btn-success btn-sm dropdown-toggle text-light dropdown-icon" data-bs-toggle="dropdown"></a>' +
                                 '<div class="dropdown-menu">' +
-                                '<a href="#" class="dropdown-item btn-signatoryedit" data-id="' + row.id + '" data-sigfname="' + row.sigfname + '" data-sigmname="' + row.sigmname + '" data-siglname="' + row.siglname + '" data-sigext="' + row.sigext + '" data-sigposition="' + row.sigposition + '">' +
+                                '<a href="#" class="dropdown-item btn-signatoryedit"' +
+                                ' data-id="' + row.id + '"' +
+                                ' data-sigfname="' + (row.sigfname || '') + '"' +
+                                ' data-sigmname="' + (row.sigmname || '') + '"' +
+                                ' data-siglname="' + (row.siglname || '') + '"' +
+                                ' data-sigext="' + (row.sigext || '') + '"' +
+                                ' data-sigposition="' + (row.sigposition || '') + '"' +
+                                ' data-signatory_role="' + signatoryroleStr + '"' +
+                                ' data-formassign="' + formStr + '">' + // Changed row.formStr to formStr
                                 '<i class="fas fa-pen"></i> Edit' +
                                 '</a>' +
                                 '<a href="#" class="dropdown-item btn-ustatusedit" data-id="' + row.id + '" data-ustatus="' + row.ustatus + '">' +
@@ -95,8 +107,8 @@
                         } else {
                             return data;
                         }
-                    },
-                },
+                    }
+                }
             ],
             "createdRow": function (row, data, index) {
                 $(row).attr('id', 'tr-' + data.id); 
@@ -107,22 +119,51 @@
         });
     });
 
-    $(document).on('click', '.btn-signatoryedit', function() {
-        var id = $(this).data('id');
-        var fName = $(this).data('sigfname');
-        var mName = $(this).data('sigmname');
-        var lName = $(this).data('siglname');
-        var exName = $(this).data('sigext');
-        var positionName = $(this).data('sigposition');
-        var statusName = $(this).data('status');
+    $(document).on('change', '.status-switch', function() {
+        var labelText = $(this).closest('.form-check').find('.status-label-text');
+        labelText.text(this.checked ? 'Released' : 'Not Selected');
+    });
 
-        $('#editsigId').val(id);
-        $('#editFname').val(fName);
-        $('#editMname').val(mName);
-        $('#editLname').val(lName);
-        $('#editExt').val(exName);
-        $('#editPosition').val(positionName);
-        $('#editDocumentStatus').val(statusName);
+    $(document).on('click', '.btn-signatoryedit', function() {
+        var $btn = $(this);
+        
+        $('#editsigId').val($(this).data('id'));
+        $('#editFname').val($(this).data('sigfname'));
+        $('#editMname').val($(this).data('sigmname'));
+        $('#editLname').val($(this).data('siglname'));
+        $('#editExt').val($(this).data('sigext'));
+        $('#editPosition').val($(this).data('sigposition'));
+
+        // 1. Reset all checkboxes first
+        $('input[name="formassign[]"]').prop('checked', false);
+        $('select[name="signatory_role[]"]').val('');
+
+        // 2. Populate form assignment checkboxes
+        var rawAssign = $(this).attr('data-formassign') || '';
+        var assignedForms = rawAssign ? rawAssign.split(',') : [];
+
+        // 3. Check matching switch inputs
+        assignedForms.forEach(function(val) {
+            var cleanVal = val.trim();
+            if (cleanVal) {
+                $('input[name="formassign[]"][value="' + cleanVal + '"]').prop('checked', true);
+            }
+        });
+
+        // 3. Populate signatory roles dropdowns
+        var rawRoles = $btn.attr('data-signatory_role') || '';
+        var assignedRoles = rawRoles ? rawRoles.split(',') : [];
+
+        assignedRoles.forEach(function(roleVal, index) {
+            var formNum = index + 1; // Assuming roles map directly to form1, form2, etc.
+            $('#editSignatoryRolef' + formNum).val(roleVal.trim());
+        });
+
+        // 4. Refresh switch text labels
+        $('.status-switch').each(function() {
+            var labelText = $(this).closest('.form-check').find('.status-label-text');
+            labelText.text(this.checked ? 'Released' : 'Not Selected');
+        });
 
         $('#editsignatoryModal').modal('show');
     });

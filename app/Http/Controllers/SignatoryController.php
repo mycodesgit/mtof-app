@@ -39,15 +39,21 @@ class SignatoryController extends Controller
                 'sigfname'  => 'required|string|max:255',
                 'sigmname'  => 'required|string|max:255',
                 'siglname'  => 'required|string|max:255',
-                'sigext'  => 'required|string|max:255',
                 'sigposition'  => 'required|string|max:255',
             ]);
 
-            $docName = $request->input('title'); 
-            $existingDocs = Signatories::where('title', $docName)->first();
+            $signatoryfName = $request->input('sigfname'); 
+            $signatorymName = $request->input('sigmname'); 
+            $signatorylName = $request->input('siglname'); 
+            $signatoryextName = $request->input('sigext'); 
+            $existingSignatory = Signatories::where('sigfname', $signatoryfName)
+                    ->where('sigmname', $signatorymName)
+                    ->where('siglname', $signatorylName)
+                    ->where('sigext', $signatoryextName)
+                    ->first();
 
-            if ($existingDocs) {
-                return response()->json(['error' => true, 'message' => 'Document already exists!']);
+            if ($existingSignatory) {
+                return response()->json(['error' => true, 'message' => 'Signatory already exists!']);
             }
 
             try {
@@ -61,9 +67,9 @@ class SignatoryController extends Controller
                     'postedBy' => $authuser,
                 ]);
 
-                return response()->json(['success' => true, 'message' => 'Document stored successfully!']);
+                return response()->json(['success' => true, 'message' => 'Signatory stored successfully!']);
             } catch (\Exception $e) {
-                return response()->json(['error' => true, 'message' => 'Failed to store Document!']);
+                return response()->json(['error' => true, 'message' => 'Failed to store Signatory!']);
             }
         }
     }
@@ -75,6 +81,7 @@ class SignatoryController extends Controller
             'sigfname'    => 'required|string|max:255',
             'sigmname'    => 'required|string|max:255',
             'siglname'    => 'required|string|max:255',
+            'formassign.*'=> 'string',
         ]);
 
         try {
@@ -97,6 +104,8 @@ class SignatoryController extends Controller
                 'siglname'    => $request->input('siglname'),
                 'sigext'      => $request->input('sigext'),
                 'sigposition' => $request->input('sigposition'),
+                'formassign'  => $request->input('formassign', []),
+                'signatory_role'  => $request->input('signatory_role', []),
             ]);
 
             return response()->json(['success' => true, 'message' => 'Updated Successfully']);

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('siglname');
             $table->string('sigext')->nullable();
             $table->foreignId('sigposition')->constrained('positions');
-            $table->string('postedBy');
+            $table->foreignId('postedBy')->constrained('users');
             $table->enum('status', ['1', '2'])->default('1');
             $table->string('formassign')->nullable();
             $table->enum('signatory_role', ['Processed', 'Verified', 'Noted'])->nullable();

@@ -37,4 +37,9 @@ class Signatories extends Model
     {
         return $this->position ? $this->position->name : null;
     }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'postedBy');
+    }
 }

@@ -15,6 +15,7 @@ use PDF;
 
 use App\Models\Positions;
 use App\Models\Signatories;
+use App\Models\User;
 
 class SignatoryController extends Controller
 {
@@ -27,7 +28,7 @@ class SignatoryController extends Controller
 
     public function show(Request $request)
     {  
-        $data = Signatories::with(['position'])->get();
+        $data = Signatories::with(['position', 'users'])->get();
         
         return response()->json(['data' => $data]);
     }

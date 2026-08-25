@@ -59,7 +59,21 @@
                     }
                 },
                 {data: 'position_name'},
-                {data: 'postedBy'},
+                {
+                    data: 'users',
+                    render: function(data, type, row) {
+                        var firstname = data.fname;
+                        var middleInitial = data.mname ? data.mname.substr(0, 1) + '.' : '';
+                        var lastNameWithExt = data.lname;
+
+                        // Check if ext exists and is not 'N/A' or null
+                        if (data.ext && data.ext !== 'N/A' && data.ext !== null) {
+                            lastNameWithExt += ' ' + data.ext;
+                        }
+
+                        return firstname + ' ' + middleInitial + ' ' + lastNameWithExt;
+                    }
+                },
                 {
                     data: null,
                     render: function (data, type, row) {

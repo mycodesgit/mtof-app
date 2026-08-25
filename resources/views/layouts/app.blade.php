@@ -298,6 +298,9 @@
     @if (request()->routeIs('position.index'))
         @include('scripts.positionjs')
     @endif
+    @if (request()->routeIs('users.index'))
+        @include('scripts.usersjs')
+    @endif
 </body>
 
 </html>

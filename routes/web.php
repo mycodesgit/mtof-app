@@ -10,6 +10,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\SignatoryController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AccountSettingController;
 
 /*
@@ -73,6 +74,12 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::post('/list/view/store', [PositionController::class,'store'])->name('position.store');
         Route::post('/list/view/update', [PositionController::class,'update'])->name('position.update');
         Route::post('/list/view/delete/{id}', [PositionController::class,'destroy'])->name('position.destroy');
+    });
+
+    Route::prefix('/users')->group(function () {
+        Route::get('/system/view', [UserController::class,'index'])->name('users.index');
+        Route::get('/system/fetch', [UserController::class,'show'])->name('users.show');
+        Route::post('/system/add', [UserController::class,'create'])->name('users.create');
     });
 
     Route::prefix('/system')->group(function () {

@@ -5,6 +5,7 @@
     $documentsActive = in_array($current_route, ['document.index']) ? 'active' : '';
     $signatoryActive = in_array($current_route, ['signatory.index']) ? 'active' : '';
     $positionActive = in_array($current_route, ['position.index']) ? 'active' : '';
+    $userActive = in_array($current_route, ['users.index']) ? 'active' : '';
     $settingsActive = in_array($current_route, ['settings.index']) ? 'active' : '';
 @endphp
 
@@ -53,7 +54,7 @@
         <small class="nav-text" style="color: #919191 !important">User Management</small>
     </li>
     <li>
-        <a class="nav-link" href="#">
+        <a class="nav-link {{ $userActive }}" href="{{ route('users.index') }}">
             <i class="ti ti-user-plus"></i><span class="nav-text">Users</span>
         </a>
     </li>

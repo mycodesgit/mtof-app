@@ -231,17 +231,25 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // 1. Chart.js Execution using json_encode for safe array conversion
+            const htmlElement = document.documentElement;
+
+            // Helper to get bar color based on Bootstrap data-bs-theme attribute
+            function getChartBarColor() {
+                const isDarkMode = htmlElement.getAttribute('data-bs-theme') === 'dark';
+                return isDarkMode ? '#aaabac' : '#18181b'; // White-gray (#e4e4e7) for dark mode, dark (#18181b) for light mode
+            }
+
             const liveChartData = @json($chartData ?? array_fill(0, 12, 0));
             const ctx = document.getElementById('franchiseChart').getContext('2d');
 
-            new Chart(ctx, {
+            const franchiseChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     datasets: [{
                         label: 'Registrations',
                         data: liveChartData,
-                        backgroundColor: '#18181b',
+                        backgroundColor: getChartBarColor(),
                         borderRadius: 4,
                     }]
                 },
@@ -257,6 +265,21 @@
                         }
                     }
                 }
+            });
+
+            // Watch for data-bs-theme attribute changes when the theme button is clicked
+            const themeObserver = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'data-bs-theme') {
+                        franchiseChart.data.datasets[0].backgroundColor = getChartBarColor();
+                        franchiseChart.update();
+                    }
+                });
+            });
+
+            themeObserver.observe(htmlElement, { 
+                attributes: true, 
+                attributeFilter: ['data-bs-theme'] 
             });
 
             // 2. Interactive Client-side Calendar Engine

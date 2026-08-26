@@ -12,14 +12,6 @@
                 <h1 class="h4 fw-bold mb-1">Franchise & Application Reports</h1>
                 <p class="text-muted small mb-0">Filter, extract, and print official MTOF permit and compliance records.</p>
             </div>
-            <div class="d-flex gap-2">
-                <button type="button" onclick="window.print()" class="btn btn-sm btn-white border shadow-sm px-3">
-                    <i class="ti ti-printer me-1"></i> Print Page
-                </button>
-                <a href="{{ route('report.index', array_merge(request()->query(), ['export' => 'excel'])) }}" class="btn btn-sm btn-success shadow-sm px-3">
-                    <i class="ti ti-file-spreadsheet me-1"></i> Export Excel
-                </a>
-            </div>
         </div>
 
         <div class="row g-3">

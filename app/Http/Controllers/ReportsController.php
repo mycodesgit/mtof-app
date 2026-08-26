@@ -23,6 +23,11 @@ class ReportsController extends Controller
 
     public function store(Request $request)
     {
+        return view('report.generaterepresult');
+    }
+
+    public function show(Request $request)
+    {  
         $query = Applicants::query();
 
         // Filter by Franchise Status
@@ -40,9 +45,8 @@ class ReportsController extends Controller
             $q->whereYear('created_at', $request->year);
         });
 
-        // Paginate results and preserve search query parameters in pagination links
-        $reports = $query->latest()->paginate(20)->appends($request->all());
-
-        return view('report.generaterepresult', compact('reports'));
+        $data = $query->latest()->get();
+        
+        return response()->json(['data' => $data]);
     }
 }

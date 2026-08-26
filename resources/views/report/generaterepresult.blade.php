@@ -12,14 +12,6 @@
                 <h1 class="h4 fw-bold mb-1">Franchise & Application Reports</h1>
                 <p class="text-muted small mb-0">Filter, extract, and print official MTOF permit and compliance records.</p>
             </div>
-            <div class="d-flex gap-2">
-                <button type="button" onclick="window.print()" class="btn btn-sm btn-white border shadow-sm px-3">
-                    <i class="ti ti-printer me-1"></i> Print Page
-                </button>
-                <a href="{{ route('report.index', array_merge(request()->query(), ['export' => 'excel'])) }}" class="btn btn-sm btn-success shadow-sm px-3">
-                    <i class="ti ti-file-spreadsheet me-1"></i> Export Excel
-                </a>
-            </div>
         </div>
 
         <div class="row g-3">
@@ -93,14 +85,12 @@
 
                         <div class="page-header mt-5" style="border-bottom: 1px solid #04401f;"></div>
 
-                        <div class="table-responsive">
+                        <div class="table-responsive mt-2 p-2">
                             <table id="gnrtdreports" class="table table-hover" style="width: 100%">
                                 <thead>
                                     <tr>
                                         <th>MTOF ID</th>
-                                        <th>First Name</th>
-                                        <th>Middle Name</th>
-                                        <th>Last Name</th>
+                                        <th>Name</th>
                                         <th>Brgy.</th>
                                         <th>Tin</th>
                                         <th>Make</th>
@@ -119,51 +109,12 @@
                                         <th>Date Issued</th>
                                         <th>Date Expired</th>
                                         <th>Or Date</th>
-                                        <th>Processor Name</th>
                                         <th>Status</th>
                                         <th>Status1</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($reports ?? [] as $item)
-                                        <tr>
-                                            <td>{{ $item->mtof_id ?? $item->id }}</td>
-                                            <td>{{ $item->fname ?? 'N/A' }}</td>
-                                            <td>{{ $item->mname ?? 'N/A' }}</td>
-                                            <td>{{ $item->lname ?? 'N/A' }}</td>
-                                            <td>{{ $item->brgy ?? 'N/A' }}</td>
-                                            <td>{{ $item->tin_no ?? 'N/A' }}</td>
-                                            <td>{{ $item->mtof_make ?? 'N/A' }}</td>
-                                            <td>{{ $item->mtof_color ?? 'N/A' }}</td>
-                                            <td>{{ $item->cc ?? 'N/A' }}</td>
-                                            <td>{{ $item->motor_no ?? 'N/A' }}</td>
-                                            <td>{{ $item->chassis_no ?? 'N/A' }}</td>
-                                            <td>{{ $item->plate_no ?? 'N/A' }}</td>
-                                            <td>{{ $item->driver_name ?? 'N/A' }}</td>
-                                            <td>{{ $item->driver_license ?? 'N/A' }}</td>
-                                            <td>{{ $item->date_acquired ? \Carbon\Carbon::parse($item->date_acquired)->format('M d, Y') : 'N/A' }}</td>
-                                            <td>{{ $item->valid_until ?? 'N/A' }}</td>
-                                            <td>{{ $item->body_no ?? 'N/A' }}</td>
-                                            <td>{{ $item->route ?? 'N/A' }}</td>
-                                            <td>{{ $item->color_code ?? 'N/A' }}</td>
-                                            <td>{{ $item->date_issued ? \Carbon\Carbon::parse($item->date_issued)->format('M d, Y') : 'N/A' }}</td>
-                                            <td>{{ $item->date_expired ? \Carbon\Carbon::parse($item->date_expired)->format('M d, Y') : 'N/A' }}</td>
-                                            <td>{{ $item->or_date ? \Carbon\Carbon::parse($item->or_date)->format('M d, Y') : 'N/A' }}</td>
-                                            <td>{{ $item->processor_name ?? 'N/A' }}</td>
-                                            <td>
-                                                <span class="badge bg-secondary-subtle text-secondary px-2 py-1">
-                                                    {{ $item->status ?? 'Pending' }}
-                                                </span>
-                                            </td>
-                                            <td>{{ $item->status1 ?? 'N/A' }}</td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="25" class="text-center py-4 text-muted">
-                                                No generated reports found for the selected filter parameters.
-                                            </td>
-                                        </tr>
-                                    @endforelse
+
                                 </tbody>
                             </table>
                         </div>
@@ -172,4 +123,8 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var reportViewRoute = "{{ route('report.show') }}";
+    </script>
 @endsection

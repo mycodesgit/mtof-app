@@ -330,6 +330,9 @@
     @if (request()->routeIs('position.index'))
         @include('scripts.positionjs')
     @endif
+    @if (request()->routeIs('report.store'))
+        @include('scripts.reportsjs')
+    @endif
     @if (request()->routeIs('users.index'))
         @include('scripts.usersjs')
     @endif

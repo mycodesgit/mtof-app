@@ -80,6 +80,7 @@ Route::group(['middleware'=>['login_empauth']],function(){
     Route::prefix('/generate')->group(function () {
         Route::get('/reports/view', [ReportsController::class,'index'])->name('report.index');
         Route::get('/reports/view/result', [ReportsController::class,'store'])->name('report.store');
+        Route::get('/reports/view/result/fetch', [ReportsController::class,'show'])->name('report.show');
     });
 
     Route::prefix('/users')->group(function () {

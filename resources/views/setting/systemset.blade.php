@@ -49,47 +49,59 @@
 
                                     {{-- 1. BRANDING & LOGO --}}
                                     <div class="tab-pane fade show active" id="branding" role="tabpanel">
-                                        <div class="row g-4">
-                                            {{-- Primary System Logo --}}
-                                            <div class="col-md-6">
-                                                <div class="border rounded p-3 text-center">
-                                                    <label class="form-label fw-bold d-block">System Main Logo</label>
-                                                    
-                                                    <div class="mb-3 d-flex justify-content-center align-items-center border rounded" style="height: 140px;">
-                                                        <i class="ti ti-photo fs-1 text-muted"></i>
-                                                    </div>
+                                        <form id="logoForm" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="row g-4">
+                                                {{-- Primary System Logo --}}
+                                                <div class="col-md-6">
+                                                    <div class="border rounded p-3 text-center">
+                                                        <label class="form-label fw-bold d-block">System Main Logo</label>
+                                                        
+                                                        <div class="mb-3 d-flex justify-content-center align-items-center border rounded" style="height: 140px;">
+                                                            @if(isset($settings) && $settings->logosys)
+                                                                <img src="{{ asset('storage/' . $settings->logosys) }}" alt="System Logo" class="img-fluid h-100 object-fit-contain">
+                                                            @else
+                                                                <i class="ti ti-photo fs-1 text-muted"></i>
+                                                            @endif
+                                                        </div>
 
-                                                    <div class="input-group">
-                                                        <input type="file" class="form-control" accept="image/png, image/jpeg, image/svg+xml">
-                                                        <label class="input-group-text"><i class="ti ti-upload"></i></label>
+                                                        <div class="input-group">
+                                                            <input type="file" class="form-control" name="logosys" accept="image/png, image/jpeg, image/svg+xml">
+                                                            <label class="input-group-text"><i class="ti ti-upload"></i></label>
+                                                        </div>
+                                                        <small class="text-muted d-block mt-2">Recommended size: 250x80px. PNG or SVG preferred.</small>
                                                     </div>
-                                                    <small class="text-muted d-block mt-2">Recommended size: 250x80px. PNG or SVG preferred.</small>
+                                                </div>
+
+                                                {{-- Favicon --}}
+                                                <div class="col-md-6">
+                                                    <div class="border rounded p-3 text-center">
+                                                        <label class="form-label fw-bold d-block">Favicon</label>
+                                                        
+                                                        <div class="mb-3 d-flex justify-content-center align-items-center border rounded" style="height: 140px;">
+                                                            @if(isset($settings) && $settings->faviconsys)
+                                                                <img src="{{ asset('storage/' . $settings->faviconsys) }}" alt="Favicon" class="img-fluid" style="max-height: 50px; max-width: 50px;">
+                                                            @else
+                                                                <i class="ti ti-world fs-1 text-muted"></i>
+                                                            @endif
+                                                        </div>
+
+                                                        <div class="input-group">
+                                                            <input type="file" class="form-control" name="faviconsys" accept="image/x-icon, image/png">
+                                                            <label class="input-group-text"><i class="ti ti-upload"></i></label>
+                                                        </div>
+                                                        <small class="text-muted d-block mt-2">Square format (32x32px or 64x64px). .ico or .png format.</small>
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            {{-- Favicon --}}
-                                            <div class="col-md-6">
-                                                <div class="border rounded p-3 text-center">
-                                                    <label class="form-label fw-bold d-block">Favicon</label>
-                                                    
-                                                    <div class="mb-3 d-flex justify-content-center align-items-center border rounded" style="height: 140px;">
-                                                        <i class="ti ti-world fs-1 text-muted"></i>
-                                                    </div>
-
-                                                    <div class="input-group">
-                                                        <input type="file" class="form-control" accept="image/x-icon, image/png">
-                                                        <label class="input-group-text"><i class="ti ti-upload"></i></label>
-                                                    </div>
-                                                    <small class="text-muted d-block mt-2">Square format (32x32px or 64x64px). .ico or .png format.</small>
-                                                </div>
+                                            <div class="text-end mt-4">
+                                                <!-- Changed type="button" to type="submit" -->
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="ti ti-device-floppy me-1"></i> Save Branding Settings
+                                                </button>
                                             </div>
-                                        </div>
-
-                                        <div class="text-end mt-4">
-                                            <button type="button" class="btn btn-primary">
-                                                <i class="ti ti-device-floppy me-1"></i> Save Branding Settings
-                                            </button>
-                                        </div>
+                                        </form>
                                     </div>
 
                                     {{-- 2. GENERAL CONFIGURATION --}}

@@ -247,6 +247,9 @@
     @if (request()->routeIs('users.index'))
         @include('scripts.usersjs')
     @endif
+    @if (request()->routeIs('settings.index'))
+        @include('scripts.logofaviconjs')
+    @endif
 </body>
 
 </html>

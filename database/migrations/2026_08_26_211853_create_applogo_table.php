@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('applogo', function (Blueprint $table) {
             $table->id();
+            $table->string('logosys')->nullable(); 
+            $table->string('faviconsys')->nullable();
             $table->timestamps();
         });
     }

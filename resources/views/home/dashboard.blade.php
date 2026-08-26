@@ -15,10 +15,10 @@
                         <p class="text-muted small mb-0">System metrics, application trends, and daily activity logs.</p>
                     </div>
                     <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-outline-secondary px-3 shadow-sm rounded-2">
-                            <i class="ti ti-download me-1"></i> Export Data
-                        </button>
-                        <a href="#" class="btn btn-sm btn-dark px-3 shadow-sm rounded-2">
+                        <a href="{{ route('report.index') }}" class="btn btn-sm btn-secondary px-3 shadow-sm rounded-2">
+                            <i class="ti ti-file-excel me-1"></i> Export Data
+                        </a>
+                        <a href="{{ route('applicant.index') }}" class="btn btn-sm btn-dark px-3 shadow-sm rounded-2">
                             <i class="ti ti-plus me-1"></i> New Registration
                         </a>
                     </div>
@@ -107,50 +107,97 @@
                 </div>
 
                 <!-- Status Summary Cards -->
-                <div class="row g-2 mb-4">
-                    <div class="col">
-                        <div class="card card-animate p-3 text-center">
-                            <small class="text-muted fw-medium d-block mb-1">Expired OR/CR</small>
-                            <h5 class="fw-bold mb-0">{{ $expiredOrCrCount ?? 0 }}</h5>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-animate p-3 text-center">
-                            <small class="text-muted fw-medium d-block mb-1">Private</small>
-                            <h5 class="fw-bold mb-0">{{ $privateCount ?? 0 }}</h5>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-animate p-3 text-center">
-                            <small class="text-muted fw-medium d-block mb-1">Both (Pvt/Exp)</small>
-                            <h5 class="fw-bold mb-0">{{ $bothCount ?? 0 }}</h5>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-animate p-3 text-center">
-                            <small class="text-muted fw-medium d-block mb-1">Released</small>
-                            <h5 class="fw-bold mb-0">{{ $releasedCount ?? 0 }}</h5>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-animate p-3 text-center">
-                            <small class="text-muted fw-medium d-block mb-1">Validated</small>
-                            <h5 class="fw-bold mb-0">{{ $validatedCount ?? 0 }}</h5>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-animate p-3 text-center">
-                            <small class="text-muted fw-medium d-block mb-1">Revoked</small>
-                            <h5 class="fw-bold mb-0">{{ $revokedCount ?? 0 }}</h5>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-animate p-3 text-center bg-danger-subtle border-danger-subtle">
-                            <small class="text-danger fw-medium d-block mb-1">Expired Franchise</small>
-                            <h5 class="fw-bold mb-0 text-danger">{{ $expiredFranchiseCount ?? 0 }}</h5>
-                        </div>
-                    </div>
-                </div>
+                <div class="marquee-wrapper mb-4">
+    <div class="marquee-content">
+        <!-- FIRST SET OF CARDS -->
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Expired OR/CR</small>
+                <h5 class="fw-bold mb-0">{{ $expiredOrCrCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Private</small>
+                <h5 class="fw-bold mb-0">{{ $privateCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Both (Pvt/Exp)</small>
+                <h5 class="fw-bold mb-0">{{ $bothCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Released</small>
+                <h5 class="fw-bold mb-0">{{ $releasedCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Validated</small>
+                <h5 class="fw-bold mb-0">{{ $validatedCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Revoked</small>
+                <h5 class="fw-bold mb-0">{{ $revokedCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100 bg-danger-subtle border-danger-subtle">
+                <small class="text-danger fw-medium d-block mb-1">Expired Franchise</small>
+                <h5 class="fw-bold mb-0 text-danger">{{ $expiredFranchiseCount ?? 0 }}</h5>
+            </div>
+        </div>
+
+        <!-- DUPLICATE SET (Ensures seamless infinite loop) -->
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Expired OR/CR</small>
+                <h5 class="fw-bold mb-0">{{ $expiredOrCrCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Private</small>
+                <h5 class="fw-bold mb-0">{{ $privateCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Both (Pvt/Exp)</small>
+                <h5 class="fw-bold mb-0">{{ $bothCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Released</small>
+                <h5 class="fw-bold mb-0">{{ $releasedCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Validated</small>
+                <h5 class="fw-bold mb-0">{{ $validatedCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100">
+                <small class="text-muted fw-medium d-block mb-1">Revoked</small>
+                <h5 class="fw-bold mb-0">{{ $revokedCount ?? 0 }}</h5>
+            </div>
+        </div>
+        <div class="marquee-card">
+            <div class="card card-animate p-3 text-center h-100 bg-danger-subtle border-danger-subtle">
+                <small class="text-danger fw-medium d-block mb-1">Expired Franchise</small>
+                <h5 class="fw-bold mb-0 text-danger">{{ $expiredFranchiseCount ?? 0 }}</h5>
+            </div>
+        </div>
+    </div>
+</div>
 
                 <!-- Recent Registrations Table -->
                 <div class="card card-animate">

@@ -9,6 +9,8 @@ class Applicants extends Model
 {
     use HasFactory;
 
+    protected $table = 'applicants';
+
     protected $fillable = [
         'fname',
         'mname',

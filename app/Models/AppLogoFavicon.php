@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Positions extends Model
+class AppLogoFavicon extends Model
 {
     use HasFactory;
 
-    protected $table = 'positions';
+    protected $table = 'applogo';
 
     protected $fillable = [
-        'name',
-        'status',
-        'pdelstatus',
-        'created_at',
+        'logosys',
+        'faviconsys',
     ];
 }

@@ -9,6 +9,8 @@ class Signatories extends Model
 {
     use HasFactory;
 
+    protected $table = 'signatories';
+
     protected $fillable = [
         'sigfname',
         'sigmname',

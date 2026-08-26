@@ -6,6 +6,7 @@
     $signatoryActive = in_array($current_route, ['signatory.index']) ? 'active' : '';
     $positionActive = in_array($current_route, ['position.index']) ? 'active' : '';
     $userActive = in_array($current_route, ['users.index']) ? 'active' : '';
+    $reportActive = in_array($current_route, ['report.index', 'report.store']) ? 'active' : '';
     $settingsActive = in_array($current_route, ['settings.index']) ? 'active' : '';
 @endphp
 
@@ -45,7 +46,7 @@
         <small class="nav-text" style="color: #919191 !important">Report Management</small>
     </li>
     <li>
-        <a class="nav-link" href="#">
+        <a class="nav-link {{ $reportActive }}" href="{{ route('report.index') }}">
             <i class="ti ti-file"></i><span class="nav-text">Reports</span>
         </a>
     </li>

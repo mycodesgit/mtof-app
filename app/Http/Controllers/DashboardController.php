@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 use App\Models\Applicants;
@@ -37,6 +38,22 @@ class DashboardController extends Controller
         // Recent Registration Activity
         $recentApplicants = Applicants::latest()->take(5)->get();
 
+        // Monthly registration counts for the current year
+        $monthlyData = Applicants::select(
+                DB::raw('MONTH(created_at) as month'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->whereYear('created_at', date('Y'))
+            ->groupBy('month')
+            ->pluck('total', 'month')
+            ->toArray();
+
+        // Fill all 12 months (Jan-Dec) with 0 if no records exist
+        $chartData = [];
+        for ($m = 1; $m <= 12; $m++) {
+            $chartData[] = $monthlyData[$m] ?? 0;
+        }
+
         return view('home.dashboard', compact(
             'appcount',
             'signcount',
@@ -48,7 +65,8 @@ class DashboardController extends Controller
             'validatedCount',
             'revokedCount',
             'expiredFranchiseCount',
-            'recentApplicants'
+            'recentApplicants',
+            'chartData'
         ));
     }
 

@@ -5,201 +5,309 @@
 @endsection
 
 @section('body')
-<div class="row">
-    <div class="col-12">
-        <div class="mb-6">
-            <h1 class="fs-5 mb-4">Dashboard</h1>
+    <div class="row">
+        <div class="col-12">
+            <div class="mb-6">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="h4 fw-bold mb-1" style="letter-spacing: -0.02em;">Dashboard Overview</h1>
+                        <p class="text-muted small mb-0">System metrics, application trends, and daily activity logs.</p>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-secondary px-3 shadow-sm rounded-2">
+                            <i class="ti ti-download me-1"></i> Export Data
+                        </button>
+                        <a href="#" class="btn btn-sm btn-dark px-3 shadow-sm rounded-2">
+                            <i class="ti ti-plus me-1"></i> New Registration
+                        </a>
+                    </div>
+                </div>
 
-            <!-- Top Level Overview Cards -->
-            <div class="row g-4 mb-5">
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="card card-animate">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center">
+                <!-- Top KPI Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="card card-animate p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted small fw-medium">Total Registered</span>
+                                <i class="ti ti-users text-muted fs-5"></i>
+                            </div>
+                            <div class="h2 fw-bold mb-1">{{ number_format($appcount ?? 0) }}</div>
+                            <small class="text-muted"><span class="text-success fw-semibold"><i class="ti ti-arrow-up-right"></i> Active</span> total applications</small>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="card card-animate p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted small fw-medium">Validated Franchises</span>
+                                <i class="ti ti-file-check text-muted fs-5"></i>
+                            </div>
+                            <div class="h2 fw-bold mb-1">{{ number_format($validatedCount ?? 0) }}</div>
+                            <small class="text-muted"><span class="text-success fw-semibold"><i class="ti ti-check"></i> Validated</span> & operational</small>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="card card-animate p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted small fw-medium">Signatories</span>
+                                <i class="ti ti-signature text-muted fs-5"></i>
+                            </div>
+                            <div class="h2 fw-bold mb-1">{{ number_format($signcount ?? 0) }}</div>
+                            <small class="text-muted"><span class="fw-semibold">Active</span> authorized officers</small>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-sm-6">
+                        <div class="card card-animate p-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted small fw-medium">System Users</span>
+                                <i class="ti ti-users-group text-muted fs-5"></i>
+                            </div>
+                            <div class="h2 fw-bold mb-1">{{ number_format($userCount ?? 0) }}</div>
+                            <small class="text-muted"><span class="fw-semibold">Staff</span> accounts active</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart + Dynamic Calendar Row -->
+                <div class="row g-3 mb-4">
+                    <!-- Chart Widget -->
+                    <div class="col-lg-9">
+                        <div class="card card-animate p-4 h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div>
-                                    <h3 class="fw-bold h1 mb-0">{{ $appcount }}</h3>
-                                    <span class="text-muted">Total Registered</span>
+                                    <h6 class="fw-bold mb-0">Franchise Analytics</h6>
+                                    <small class="text-muted">Monthly breakdown of registrations for {{ date('Y') }}</small>
                                 </div>
-                                <div>
-                                    <i class="ti ti-users fs-1 text-primary"></i>
+                            </div>
+                            <div style="height: 260px;">
+                                <canvas id="franchiseChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Calendar Widget -->
+                    <div class="col-lg-3">
+                        <div class="card card-animate p-4 h-100">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="fw-bold mb-0"><i class="ti ti-calendar me-1"></i> Calendar</h6>
+                                <small class="text-muted fw-semibold" id="calendarMonthYear"></small>
+                            </div>
+                            <div class="shadcn-calendar">
+                                <div class="row g-1 text-center text-muted small fw-semibold mb-2">
+                                    <div class="col">Su</div><div class="col">Mo</div><div class="col">Tu</div>
+                                    <div class="col">We</div><div class="col">Th</div><div class="col">Fr</div><div class="col">Sa</div>
                                 </div>
+                                <div id="calendarDaysContainer"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="card card-animate">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h3 class="fw-bold h1 mb-0">{{ $validatedCount }}</h3>
-                                    <span class="text-muted">Active Franchises</span>
-                                </div>
-                                <div>
-                                    <i class="ti ti-file-check fs-1 text-success"></i>
-                                </div>
-                            </div>
+                <!-- Status Summary Cards -->
+                <div class="row g-2 mb-4">
+                    <div class="col">
+                        <div class="card card-animate p-3 text-center">
+                            <small class="text-muted fw-medium d-block mb-1">Expired OR/CR</small>
+                            <h5 class="fw-bold mb-0">{{ $expiredOrCrCount ?? 0 }}</h5>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card card-animate p-3 text-center">
+                            <small class="text-muted fw-medium d-block mb-1">Private</small>
+                            <h5 class="fw-bold mb-0">{{ $privateCount ?? 0 }}</h5>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card card-animate p-3 text-center">
+                            <small class="text-muted fw-medium d-block mb-1">Both (Pvt/Exp)</small>
+                            <h5 class="fw-bold mb-0">{{ $bothCount ?? 0 }}</h5>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card card-animate p-3 text-center">
+                            <small class="text-muted fw-medium d-block mb-1">Released</small>
+                            <h5 class="fw-bold mb-0">{{ $releasedCount ?? 0 }}</h5>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card card-animate p-3 text-center">
+                            <small class="text-muted fw-medium d-block mb-1">Validated</small>
+                            <h5 class="fw-bold mb-0">{{ $validatedCount ?? 0 }}</h5>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card card-animate p-3 text-center">
+                            <small class="text-muted fw-medium d-block mb-1">Revoked</small>
+                            <h5 class="fw-bold mb-0">{{ $revokedCount ?? 0 }}</h5>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card card-animate p-3 text-center bg-danger-subtle border-danger-subtle">
+                            <small class="text-danger fw-medium d-block mb-1">Expired Franchise</small>
+                            <h5 class="fw-bold mb-0 text-danger">{{ $expiredFranchiseCount ?? 0 }}</h5>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="card card-animate">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h3 class="fw-bold h1 mb-0">{{ $signcount }}</h3>
-                                    <span class="text-muted">Signatories</span>
-                                </div>
-                                <div>
-                                    <i class="ti ti-signature fs-1 text-info"></i>
-                                </div>
-                            </div>
+                <!-- Recent Registrations Table -->
+                <div class="card card-animate">
+                    <div class="card-header bg-transparent border-bottom p-3 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="fw-bold mb-0">Recent Applicants</h6>
+                            <small class="text-muted">Latest registered applicants in the system</small>
                         </div>
+                        <a href="{{ route('applicant.index') ?? '#' }}" class="btn btn-sm btn-outline-dark rounded-2">View All</a>
                     </div>
-                </div>
-
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="card card-animate">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h3 class="fw-bold h1 mb-0">{{ $userCount ?? 0 }}</h3>
-                                    <span class="text-muted">System Users</span>
-                                </div>
-                                <div>
-                                    <i class="ti ti-users-group fs-1 text-warning"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Application Status Breakdown (Based on Selection Types) -->
-            <h2 class="fs-6 mb-3">Franchise & Undertaking Statuses</h2>
-            <div class="row g-3 mb-5">
-                <!-- Expired OR/CR -->
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="card card-animate bg-light-warning">
-                        <div class="card-body p-3 text-center">
-                            <h4 class="fw-bold mb-1 text-warning">{{ $expiredOrCrCount }}</h4>
-                            <small class="text-muted fw-semibold">Expired OR/CR</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Private -->
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="card card-animate bg-light-info">
-                        <div class="card-body p-3 text-center">
-                            <h4 class="fw-bold mb-1 text-info">{{ $privateCount }}</h4>
-                            <small class="text-muted fw-semibold">Private</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Both -->
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="card card-animate bg-light-purple">
-                        <div class="card-body p-3 text-center">
-                            <h4 class="fw-bold mb-1 text-purple">{{ $bothCount }}</h4>
-                            <small class="text-muted fw-semibold">Both (Private & Expired)</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Released -->
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="card card-animate bg-light-primary">
-                        <div class="card-body p-3 text-center">
-                            <h4 class="fw-bold mb-1 text-primary">{{ $releasedCount }}</h4>
-                            <small class="text-muted fw-semibold">Released</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Validated -->
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="card card-animate bg-light-success">
-                        <div class="card-body p-3 text-center">
-                            <h4 class="fw-bold mb-1 text-success">{{ $validatedCount }}</h4>
-                            <small class="text-muted fw-semibold">Validated</small>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Revoked -->
-                <div class="col-lg-2 col-md-4 col-6">
-                    <div class="card card-animate bg-light-danger">
-                        <div class="card-body p-3 text-center">
-                            <h4 class="fw-bold mb-1 text-danger">{{ $revokedCount }}</h4>
-                            <small class="text-muted fw-semibold">Revoked</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Registrations Table -->
-            <div class="card">
-                <div class="card-header bg-transparent d-flex justify-content-between align-items-center py-3">
-                    <h5 class="card-title mb-0">Recent Applicants</h5>
-                    <a href="{{ route('applicant.index') ?? '#' }}" class="btn btn-sm btn-outline-primary">View All</a>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Name</th>
-                                <th>Barangay</th>
-                                <th>Plate / Engine No.</th>
-                                <th>Make / Color</th>
-                                <th>Status</th>
-                                <th>Date Registered</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($recentApplicants as $applicant)
-                                <tr>
-                                    <td class="fw-bold">{{ $applicant->fname }} {{ $applicant->mname }} {{ $applicant->lname }}</td>
-                                    <td>{{ $applicant->brgy }}</td>
-                                    <td>
-                                        <div><span class="badge bg-light text-dark border">{{ $applicant->plate_no ?? 'N/A' }}</span></div>
-                                        <small class="text-muted">{{ $applicant->motor_no }}</small>
-                                    </td>
-                                    <td>{{ $applicant->mtof_make }} ({{ $applicant->mtof_color }})</td>
-                                    <td>
-                                        @switch($applicant->status)
-                                            @case('Validated')
-                                                <span class="badge bg-success">Validated</span>
-                                                @break
-                                            @case('Released')
-                                                <span class="badge bg-primary">Released</span>
-                                                @break
-                                            @case('Expired OR/CR')
-                                                <span class="badge bg-warning text-dark">Expired OR/CR</span>
-                                                @break
-                                            @case('Revoked')
-                                                <span class="badge bg-danger">Revoked</span>
-                                                @break
-                                            @default
-                                                <span class="badge bg-secondary">{{ $applicant->status ?? 'Pending' }}</span>
-                                        @endswitch
-                                    </td>
-                                    <td>{{ $applicant->created_at ? $applicant->created_at->format('M d, Y') : 'N/A' }}</td>
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead class="border-bottom">
+                                <tr class="text-muted small fw-semibold">
+                                    <th class="ps-3">NAME</th>
+                                    <th>BARANGAY</th>
+                                    <th>PLATE / ENGINE</th>
+                                    <th>MAKE & COLOR</th>
+                                    <th>STATUS</th>
+                                    <th>REGISTERED</th>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="text-center py-4 text-muted">No applicant records found.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse($recentApplicants as $applicant)
+                                    <tr class="border-bottom">
+                                        <td class="ps-3 fw-semibold">
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-sm rounded-circle text-primary fw-bold d-flex align-items-center justify-content-center me-3" style="width: 38px; height: 38px;">
+                                                    {{ strtoupper(substr($applicant->fname ?? 'A', 0, 1)) }}
+                                                </div>
+                                                <div>
+                                                    <h6 class="mb-0 fw-semibold">{{ $applicant->fname }} {{ $applicant->mname }} {{ $applicant->lname }}</h6>
+                                                    <small class="text-muted">ID: {{ $applicant->mtof_id ?? 'N/A' }}</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-muted small">{{ $applicant->brgy ?? 'N/A' }}</td>
+                                        <td>
+                                            <span class="shadcn-badge me-1">{{ $applicant->plate_no ?? 'No Plate' }}</span>
+                                            <small class="text-muted d-block mt-1">{{ $applicant->motor_no ?? 'N/A' }}</small>
+                                        </td>
+                                        <td class="small">{{ $applicant->mtof_make ?? 'N/A' }} <span class="text-muted">({{ $applicant->mtof_color ?? 'N/A' }})</span></td>
+                                        <td>
+                                            @switch($applicant->status)
+                                                @case('Validated')
+                                                    <span class="shadcn-badge bg-success-subtle text-success border-success-subtle">Validated</span>
+                                                    @break
+                                                @case('Released')
+                                                    <span class="shadcn-badge bg-primary-subtle text-primary border-primary-subtle">Released</span>
+                                                    @break
+                                                @case('Expired OR/CR')
+                                                    <span class="shadcn-badge bg-warning-subtle text-warning border-warning-subtle">Expired OR/CR</span>
+                                                    @break
+                                                @case('Revoked')
+                                                    <span class="shadcn-badge bg-danger-subtle text-danger border-danger-subtle">Revoked</span>
+                                                    @break
+                                                @default
+                                                    <span class="shadcn-badge bg-secondary-subtle text-secondary border-secondary-subtle">{{ $applicant->status ?? 'Pending' }}</span>
+                                            @endswitch
+                                        </td>
+                                        <td class="text-muted small">{{ $applicant->created_at ? $applicant->created_at->format('M d, Y') : 'N/A' }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center py-4 text-muted">No applicant records found.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
-</div>
+
+    <!-- Chart.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 1. Chart.js Execution using json_encode for safe array conversion
+            const liveChartData = @json($chartData ?? array_fill(0, 12, 0));
+            const ctx = document.getElementById('franchiseChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Registrations',
+                        data: liveChartData,
+                        backgroundColor: '#18181b',
+                        borderRadius: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { 
+                            grid: { color: '#f4f4f5' },
+                            ticks: { precision: 0 }
+                        }
+                    }
+                }
+            });
+
+            // 2. Interactive Client-side Calendar Engine
+            function renderLiveCalendar() {
+                const container = document.getElementById('calendarDaysContainer');
+                const title = document.getElementById('calendarMonthYear');
+                const now = new Date();
+
+                const year = now.getFullYear();
+                const month = now.getMonth();
+                const today = now.getDate();
+
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                title.textContent = `${monthNames[month]} ${year}`;
+
+                const firstDay = new Date(year, month, 1).getDay();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const prevMonthDays = new Date(year, month, 0).getDate();
+
+                let html = '<div class="row g-1 text-center">';
+                let cellCount = 0;
+
+                // Previous month padding days
+                for (let i = firstDay - 1; i >= 0; i--) {
+                    html += `<div class="col"><div class="shadcn-calendar-day muted">${prevMonthDays - i}</div></div>`;
+                    cellCount++;
+                }
+
+                // Current month days
+                for (let day = 1; day <= daysInMonth; day++) {
+                    if (cellCount % 7 === 0 && cellCount !== 0) {
+                        html += '</div><div class="row g-1 text-center mt-1">';
+                    }
+                    const isActive = day === today ? 'active' : '';
+                    html += `<div class="col"><div class="shadcn-calendar-day ${isActive}">${day}</div></div>`;
+                    cellCount++;
+                }
+
+                // Next month padding days
+                let nextDay = 1;
+                while (cellCount % 7 !== 0) {
+                    html += `<div class="col"><div class="shadcn-calendar-day muted">${nextDay}</div></div>`;
+                    nextDay++;
+                    cellCount++;
+                }
+
+                html += '</div>';
+                container.innerHTML = html;
+            }
+
+            renderLiveCalendar();
+        });
+    </script>
 @endsection

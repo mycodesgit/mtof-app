@@ -91,6 +91,38 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+        .shadcn-calendar {
+            font-size: 0.85rem;
+        }
+        .shadcn-calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            color: var(--shadcn-text-main);
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+        .shadcn-calendar-day:hover {
+            background-color: #f4f4f5;
+        }
+        .shadcn-calendar-day.active {
+            background-color: #18181b;
+            color: #ffffff;
+        }
+        .shadcn-calendar-day.muted {
+            color: #d4d4d8;
+        }
+        /* Clean Badges */
+        .shadcn-badge {
+            border: 1px solid var(--shadcn-border);
+            border-radius: 0.375rem;
+            font-weight: 500;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+        }
     </style>
 </head>
 

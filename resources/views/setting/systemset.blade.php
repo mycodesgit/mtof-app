@@ -106,52 +106,55 @@
 
                                     {{-- 2. GENERAL CONFIGURATION --}}
                                     <div class="tab-pane fade" id="general" role="tabpanel">
-                                        <div class="row g-3">
-                                            <div class="col-md-6">
-                                                <label class="form-label fw-bold">System Header Name: <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control form-control-sm" placeholder="Enter System Header name">
+                                        <form id="generalForm">
+                                            @csrf
+                                            <div class="row g-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label fw-bold">System Header Name: <span class="text-danger">*</span></label>
+                                                    <input type="text" name="application_headername" value="{{ $settingsname->application_headername }}" class="form-control form-control-sm" placeholder="Enter System Header name" value="{{ $settings->application_headername ?? '' }}">
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="form-label fw-bold">System Full Name: <span class="text-danger">*</span></label>
+                                                    <input type="text" name="application_fullname" value="{{ $settingsname->application_fullname }}" class="form-control form-control-sm" placeholder="Enter System full name" value="{{ $settings->application_fullname ?? '' }}">
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <label class="form-label fw-bold">System Description: <span class="text-danger">*</span></label>
+                                                    <textarea name="application_desc" class="form-control form-control-sm" cols="30" rows="5">{{ $settings->application_desc ?? '' }}</textarea>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label class="form-label fw-bold">System About us:</label>
+                                                    <input type="text" name="application_about" class="form-control form-control-sm" placeholder="About" value="{{ $settings->application_about ?? '' }}">
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label class="form-label fw-bold">System Category:</label>
+                                                    <select name="application_category" class="form-control form-control-sm">
+                                                        <option value=""> ---Select--- </option>
+                                                        <option value="LOCAL GOVERNMENT UNIT" {{ (isset($settings) && $settings->application_category == 'LOCAL GOVERNMENT UNIT') ? 'selected' : '' }}>LOCAL GOVERNMENT UNIT</option>
+                                                        <option value="PRIVATE UNIT" {{ (isset($settings) && $settings->application_category == 'PRIVATE UNIT') ? 'selected' : '' }}>PRIVATE UNIT</option>
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="col-md-3">
+                                                    <label class="form-label fw-bold">System Email:</label>
+                                                    <input type="email" name="application_email" class="form-control form-control-sm" placeholder="admin@example.com" value="{{ $settings->application_email ?? '' }}">
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <label class="form-label fw-bold">System Contact No.:</label>
+                                                    <input type="text" name="application_contactno" class="form-control form-control-sm" placeholder="09xxxxxxxxx" value="{{ $settings->application_contactno ?? '' }}">
+                                                </div>
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <label class="form-label fw-bold">System Full Name: <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control form-control-sm" placeholder="Enter System full name">
+                                            <div class="text-end mt-4">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="ti ti-device-floppy me-1"></i> Save General Settings
+                                                </button>
                                             </div>
-
-                                            <div class="col-md-12">
-                                                <label class="form-label fw-bold">System Description: <span class="text-danger">*</span></label>
-                                                <textarea name="" id="" class="form-control form-control-sm" cols="30" rows="5"></textarea>
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label class="form-label fw-bold">System About us:</label>
-                                                <input type="email" class="form-control form-control-sm" placeholder="About">
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label class="form-label fw-bold">System Category:</label>
-                                                <select name="" id="" class="form-control form-control-sm">
-                                                    <option value=""> ---Select--- </option>
-                                                    <option value="LOCAL GOVERNMENT UNIT">LOCAL GOVERNMENT UNIT</option>
-                                                    <option value="PRIVATE UNIT">PRIVATE UNIT</option>
-                                                </select>
-                                            </div>
-                                            
-                                            <div class="col-md-3">
-                                                <label class="form-label fw-bold">System Email:</label>
-                                                <input type="email" class="form-control form-control-sm" placeholder="admin@example.com">
-                                            </div>
-
-                                            <div class="col-md-3">
-                                                <label class="form-label fw-bold">System Contact No.:</label>
-                                                <input type="text" class="form-control form-control-sm" placeholder="09xxxxxxxxx">
-                                            </div>
-                                        </div>
-
-                                        <div class="text-end mt-4">
-                                            <button type="button" class="btn btn-primary">
-                                                <i class="ti ti-device-floppy me-1"></i> Save General Settings
-                                            </button>
-                                        </div>
+                                        </form>
                                     </div>
 
                                     {{-- 3. MAINTENANCE MODE --}}

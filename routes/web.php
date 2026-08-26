@@ -95,6 +95,7 @@ Route::group(['middleware'=>['login_empauth']],function(){
     Route::prefix('/system')->group(function () {
         Route::get('/setting/view', [SettingsController::class,'index'])->name('settings.index');
         Route::post('/setting/createlogo', [SettingsController::class,'createLogoFavicon'])->name('settings.createLogoFavicon');
+        Route::post('/setting/update-general', [SettingsController::class, 'updateGeneralSettings'])->name('settings.updateGeneral');
     });
     
     Route::prefix('/account')->group(function () {

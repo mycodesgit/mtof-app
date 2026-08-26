@@ -104,8 +104,14 @@
     <aside id="sidebar" class="sidebar">
         <div class="logo-area">
             <div class="d-inline-flex">
-                <img src="{{ asset('uilibs/images/candoni-logo.png') }}" alt="logo" width="24">
-                <span class="logo-text ms-2" style="font-weight: bold">MTOF</span>
+                @if(isset($settings) && $settings->logosys)
+                    <img src="{{ asset('storage/' . $settings->logosys) }}" alt="System Logo" width="24">
+                @else
+                    <img src="{{ asset('uilibs/images/systemsetting.webp') }}" alt="logo" width="24">
+                @endif
+                <span class="logo-text ms-2" style="font-weight: bold">
+                    {{ $appSetting->application_headername ?? 'System' }}
+                </span>
             </div>
         </div>
         @include('includes.sidebar')
@@ -249,6 +255,7 @@
     @endif
     @if (request()->routeIs('settings.index'))
         @include('scripts.logofaviconjs')
+        @include('scripts.appnamejs')
     @endif
 </body>
 

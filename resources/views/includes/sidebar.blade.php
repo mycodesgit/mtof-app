@@ -24,23 +24,25 @@
             <i class="ti ti-users"></i><span class="nav-text">Applicants</span>
         </a>
     </li>
-    <li>
-        <a class="nav-link {{ $documentsActive}}" href="{{ route('document.index') }}">
-            <i class="ti ti-file"></i><span class="nav-text">Documents</span>
-        </a>
-    </li>
-    
-    <li>
-        <a class="nav-link {{ $signatoryActive }}" href="{{ route('signatory.index') }}">
-            <i class="ti ti-signature"></i><span class="nav-text">Signatories</span>
-        </a>
-    </li>
+    @if(in_array(Auth::guard('web')->user()->role, [1]))
+        <li>
+            <a class="nav-link {{ $documentsActive}}" href="{{ route('document.index') }}">
+                <i class="ti ti-file"></i><span class="nav-text">Documents</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="nav-link {{ $signatoryActive }}" href="{{ route('signatory.index') }}">
+                <i class="ti ti-signature"></i><span class="nav-text">Signatories</span>
+            </a>
+        </li>
 
-    <li>
-        <a class="nav-link {{ $positionActive }}" href="{{ route('position.index') }}">
-            <i class="ti ti-table"></i><span class="nav-text">Positions</span>
-        </a>
-    </li>
+        <li>
+            <a class="nav-link {{ $positionActive }}" href="{{ route('position.index') }}">
+                <i class="ti ti-table"></i><span class="nav-text">Positions</span>
+            </a>
+        </li>
+    @endif
 
     <li class="px-4 py-2">
         <small class="nav-text" style="color: #919191 !important">Report Management</small>
@@ -51,19 +53,19 @@
         </a>
     </li>
 
-    <li class="px-4 py-2">
-        <small class="nav-text" style="color: #919191 !important">User Management</small>
-    </li>
-    <li>
-        <a class="nav-link {{ $userActive }}" href="{{ route('users.index') }}">
-            <i class="ti ti-user-plus"></i><span class="nav-text">Users</span>
-        </a>
-    </li>
-    <li>
-        <a class="nav-link {{ $settingsActive }}" href="{{ route('settings.index') }}">
-            <i class="ti ti-settings"></i><span class="nav-text">Settings</span>
-        </a>
-    </li>
-    
-    
+    @if(in_array(Auth::guard('web')->user()->role, [1]))
+        <li class="px-4 py-2">
+            <small class="nav-text" style="color: #919191 !important">User Management</small>
+        </li>
+        <li>
+            <a class="nav-link {{ $userActive }}" href="{{ route('users.index') }}">
+                <i class="ti ti-user-plus"></i><span class="nav-text">Users</span>
+            </a>
+        </li>
+        <li>
+            <a class="nav-link {{ $settingsActive }}" href="{{ route('settings.index') }}">
+                <i class="ti ti-settings"></i><span class="nav-text">Settings</span>
+            </a>
+        </li>
+    @endif
 </ul>

@@ -369,7 +369,12 @@
                 {{-- Left Column: Hero Branding Section --}}
                 <div class="col-lg-6 col-xl-6 text-center text-lg-start pe-lg-4 d-none d-lg-block">
                     <div class="mb-3">
-                        <img src="{{ asset('uilibs/images/candoni-logo.png') }}" alt="Seal Logo" style="width: 80px; height: 80px;" class="img-fluid mb-3">
+                        {{-- <img src="{{ asset('uilibs/images/candoni-logo.png') }}" alt="Seal Logo" style="width: 80px; height: 80px;" > --}}
+                        @if(isset($settings) && $settings->logosys)
+                            <img src="{{ asset('storage/' . $settings->logosys) }}" alt="System Logo" width="90" class="img-fluid mb-3">
+                        @else
+                            <img src="{{ asset('uilibs/images/systemsetting.webp') }}" alt="logo" width="24">
+                        @endif
                         <div>
                             <span class="hero-badge">
                                 <i class="ti ti-building-landmark"></i> LOCAL GOVERNMENT UNIT
@@ -378,8 +383,7 @@
                     </div>
 
                     <h1 class="hero-title mb-3">
-                        Municipal Tricycle Operators <br>
-                        <span class="highlight">Franchising System</span>
+                        {{ $appSetting->application_fullname ?? 'System' }}
                     </h1>
 
                     <p class="text-secondary fs-6 mb-4 me-lg-4" style="max-width: 520px;">

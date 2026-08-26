@@ -108,7 +108,7 @@
                                 '<a href="#" class="dropdown-item btn-userdeact" ' +
                                     'data-id="' + row.id + '" ' +
                                     'data-fullname="' + row.fname + ' ' + row.mname + ' ' + row.lname + (row.ext && row.ext !== 'null' ? ' ' + row.ext : '') + '" ' +
-                                    'data-statuser="' + row.statuser + '">' +
+                                    'data-status="' + row.status + '">' +
                                     '<i class="fas fa-toggle-off" style="color: red"></i> Disabled Account' +
                                 '</a>' +
                                 '</div>' +
@@ -146,5 +146,107 @@
         $('#editusername').val(username);
 
         $('#edituserModal').modal('show');
+    });
+
+    $('#edituserForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: usersUpdateRoute,
+            type: "POST",
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if(response.success) {
+                    toastr.success(response.message);
+                    $('#editUserModal').modal('hide');
+                    $(document).trigger('userAdded');
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error, message) {
+                var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                toastr.error(errorMessage);
+            }
+        });
+    });
+
+    $(document).on('click', '.btn-userpass', function() {
+        var id = $(this).data('id');
+
+        $('#edituserPassId').val(id);
+        $('#edituserpass').val('');
+
+        $('#edituserPassModal').modal('show');
+    });
+
+    $('#edituserPassForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: userpassUpdateRoute,
+            type: "POST",
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if(response.success) {
+                    toastr.success(response.message);
+                    $('#edituserPassModal').modal('hide');
+                    $(document).trigger('userAdded');
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error, message) {
+                var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                toastr.error(errorMessage);
+            }
+        });
+    });
+
+    $(document).on('click', '.btn-userdeact', function() {
+        var id = $(this).data('id');
+        var fullname = $(this).data('fullname');
+        var status = $(this).data('status');
+
+        $('#edituserDeactId').val(id);
+        $('#edituserDeactfullname').val(fullname);
+        $('#edituserDeactStat').val(status);
+
+        $('#edituserDeactModal').modal('show');
+    });
+
+    $('#edituserDeactForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: userDeactRoute,
+            type: "POST",
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if(response.success) {
+                    toastr.success(response.message);
+                    $('#edituserDeactModal').modal('hide');
+                    $(document).trigger('userAdded');
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error, message) {
+                var errorMessage = xhr.responseText ? JSON.parse(xhr.responseText).message : 'An error occurred';
+                toastr.error(errorMessage);
+            }
+        });
     });
 </script>

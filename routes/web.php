@@ -80,6 +80,9 @@ Route::group(['middleware'=>['login_empauth']],function(){
         Route::get('/system/view', [UserController::class,'index'])->name('users.index');
         Route::get('/system/fetch', [UserController::class,'show'])->name('users.show');
         Route::post('/system/add', [UserController::class,'create'])->name('users.create');
+        Route::post('/system/update', [UserController::class,'update'])->name('users.update');
+        Route::post('/system/passwordupdate', [UserController::class,'userPassUpdate'])->name('userPassUpdate');
+        Route::post('/system/statusupdate', [UserController::class,'userStatusUpdate'])->name('userStatusUpdate');
     });
 
     Route::prefix('/system')->group(function () {

@@ -116,14 +116,14 @@
         </div>
     </div>
 
-    <div class="modal fade mt-6" id="editsignatoryModal" role="dialog" aria-labelledby="editsignatoryModalLabel" aria-hidden="true">
+    <div class="modal fade mt-6" id="editUserModal" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editsignatureModalLabel">Edit Signatory</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="editSignatoryForm">
+                <form id="editUserForm">
                     @csrf
                     <div class="row p-4">
                         <div class="modal-body">
@@ -362,6 +362,77 @@
         </div>
     </div>
 
+    <div class="modal fade" id="edituserPassModal" tabindex="-1" aria-modal="true" role="dialog" aria-labelledby="edituserPassModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edituserPassModalLabel">Change User Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="edituserPassForm">
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="edituserPassId">
+
+                        <div class="form-group">
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <label>New Password: <span class="text-danger">*</span></label>
+                                    <input type="text" name="password" id="edituserpass" placeholder="Enter New Password" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edituserDeactModal" tabindex="-1" aria-modal="true" role="dialog" aria-labelledby="edituserDeactModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edituserDeactModalLabel">Change User Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="edituserDeactForm">
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="edituserDeactId">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Name: <span class="text-danger">*</span></label>
+                                    <input type="text" id="edituserDeactfullname"  class="form-control form-control-sm" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Change User Status: <span class="text-danger">*</span></label>
+                                    <select name="status" class="form-control form-control-sm" id="edituserDeactStat">
+                                        <option disabled selected> --Select-- </option>
+                                        <option value="1">Enable</option>
+                                        <option value="2">Disabled</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Password Show/Hide Toggle Logic
         const togglePasswordBtn = document.getElementById('togglePassword');
@@ -387,7 +458,9 @@
 
         var usersReadRoute = "{{ route('users.show') }}";
         var usersCreateRoute = "{{ route('users.create') }}";
-        var signatoryUpdateRoute = "{{ route('signatory.update', ['id' => ':id']) }}";
+        var usersUpdateRoute = "{{ route('users.update', ['id' => ':id']) }}";
+        var userpassUpdateRoute = "{{ route('userPassUpdate', ['id' => ':id']) }}";
+        var userDeactRoute = "{{ route('userStatusUpdate', ['id' => ':id']) }}";
     </script>
 @endsection
  

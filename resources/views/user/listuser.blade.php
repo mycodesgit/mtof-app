@@ -5,10 +5,16 @@
 @endsection
 
 @section('body')
-    <div class="row ">
+    <div class="row g-4">
+        <!-- Page Header & Global Controls -->
+        <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+            <div>
+                <h1 class="h4 fw-bold mb-1">Users</h1>
+                <p class="text-muted small mb-0">List of official MTOF Users in the system.</p>
+            </div>
+        </div>
         <div class="col-md-12">
             <div class="mb-6">
-                <h1 class="fs-5 mb-4">Users</h1>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card card-animate">

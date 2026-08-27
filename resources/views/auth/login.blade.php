@@ -373,7 +373,7 @@
                         @if(isset($settings) && $settings->logosys)
                             <img src="{{ asset('storage/' . $settings->logosys) }}" alt="System Logo" width="90" class="img-fluid mb-3">
                         @else
-                            <img src="{{ asset('uilibs/images/systemsetting.webp') }}" alt="logo" width="24">
+                            <img src="{{ asset('uilibs/images/systemsetting.webp') }}" alt="logo" width="90" class="img-fluid mb-3">
                         @endif
                         <div>
                             <span class="hero-badge">
